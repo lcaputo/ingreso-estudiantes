@@ -23,10 +23,22 @@
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
-  }
   button {
     background-color: #f9f9f9;
   }
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px #b5b5b5;
+}
+
+input[type="text"]:focus {
+  @apply focus:ring-0 focus:ring-offset-0;
+  /* --tw-ring-color: none; */
+  /* --tw-ring-shadow: none; */
+}
+
+div[role="dialog"]:focus-within {
+  @apply shadow-none;
 }

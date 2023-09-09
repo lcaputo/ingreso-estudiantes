@@ -1,0 +1,29 @@
+/* .screen {
+  @apply h-screen min-w-[400px] max-w-sm
+mx-auto flex items-center;
+}
+
+.keyboard {
+  @apply grid grid-cols-3 grid-rows-6 gap-1
+p-1 w-full h-96 font-bold rounded-lg
+ring-2 ring-white/20 shadow text-primary select-none;
+}
+
+.keyboard .display {
+  @apply col-span-3 row-span-2 rounded-lg
+grid grid-cols-9 gap-1 place-content-center;
+}
+
+.keyboard button {
+  @apply relative flex items-center justify-center text-3xl
+transition-all duration-500 rounded-xl bg-white shadow-md text-gray-600
+active:scale-95 active:duration-[0s] active:bg-primary active:text-white;
+}
+
+.keyboard button svg {
+  @apply fill-gray-600 transition-all duration-500;
+}
+
+.keyboard button:active svg {
+  @apply transform scale-95 duration-[0s] fill-white;
+} */
