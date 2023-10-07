@@ -2,27 +2,33 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Logo } from "../components/Logo";
 import { useAuthStore } from "../stores/authStore";
-import { fetchStore } from "../stores/fetchStore";
+import { VITE_API_URL } from "../config";
 
 export default function Login() {
-  const setToken = useAuthStore((state:any) => state.setToken);
+  const setToken = useAuthStore((state: any) => state.setToken);
   const navigate = useNavigate();
-  const fetchData = fetchStore((state:any) => state.fetchData);
 
   async function handlerSubmit(event: any) {
     event.preventDefault();
     const { email, password } = event.target.elements;
     // do login and save cookie access token
-    const response = await fetchData("auth/login", "POST", {
-      email: email.value,
-      password: password.value,
+    const res = await fetch(VITE_API_URL + "/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
+      credentials: "include",
     });
-    console.log(response);
-    if (response.status === 200) {
+    const data = await res.json();
+    console.log(data);
+    if (data) {
       toast.success("Login Success");
-      const res = await response.json();
-      setToken(res.data.token);
-      navigate("/");
+      setToken(data);
+      navigate("/users");
     } else {
       toast.error("Login Failed");
     }
@@ -30,9 +36,11 @@ export default function Login() {
 
   return (
     <section id="login" className="bg-gray-50 dark:bg-gray-900">
-      <button onClick={() => {
-        navigate("/test");
-      }}>
+      <button
+        onClick={() => {
+          navigate("/test");
+        }}
+      >
         test
       </button>
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 h-screen">

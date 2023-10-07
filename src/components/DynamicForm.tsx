@@ -1,8 +1,8 @@
 import { Label, TextInput } from "flowbite-react";
 import { useForm } from "react-hook-form";
-import { CreateUser } from "../services/user";
 import toast from "react-hot-toast";
 import { MultiSelect } from "./MultiSelect";
+import { VITE_API_URL } from "../config";
 
 // interface Headers {
 //   key: string;
@@ -14,14 +14,15 @@ import { MultiSelect } from "./MultiSelect";
 interface Props {
   headers: any;
   submitRef: any;
+  fetchPetition: () => void;
   toggleModal: () => void;
+  enpoint?: string;
 }
 
 export function DynamicForm(props: Props) {
   const {
     register,
     handleSubmit,
-    watch,
     getValues,
     formState: { errors },
   } = useForm();
@@ -29,13 +30,20 @@ export function DynamicForm(props: Props) {
   const headers = props.headers;
 
   const submit = async () => {
-    const res = await CreateUser(getValues());
+    const res = await fetch(`${VITE_API_URL}/${props.enpoint!}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(getValues()),
+      credentials: "include",
+    });
     console.log(res);
-    if (res.statusCode === 200 || res.statusCode === 201) {
-      toast.success(res.message);
+    if (res) {
+      toast.success("creado");
       props.toggleModal();
     } else {
-      toast.error(res.message);
+      toast.error("error");
     }
   };
 
@@ -56,22 +64,6 @@ export function DynamicForm(props: Props) {
                 >
                   {header.label}
                 </label>
-                {/* <Select
-              multiple={true}
-              placeholder="Select a country"
-              id="countries"
-              sizing="sm"
-              className={
-                errors[header.key] && "border border-red-600 rounded-lg "
-              }
-              {...register(header.key, {
-                required: "select one option",
-              })}
-            >
-              {header.options.map((option: Roles) => {
-                return <option  value={option.value}>{option.label}</option>;
-              })}
-            </Select> */}
                 <MultiSelect />
                 {errors[header.key] && (
                   <small className="text-warning font-semibold">

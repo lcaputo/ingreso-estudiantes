@@ -4,7 +4,6 @@ import { Button, Modal } from "flowbite-react";
 import {
   useEffect,
   useRef,
-  useState,
 } from "react";
 import { DynamicForm } from "./DynamicForm";
 
@@ -12,6 +11,7 @@ interface Props {
   openModalInput: boolean | undefined;
   toggleModal: () => void;
   headers: any;
+  endpoint?: string;
 }
 
 interface ColumnFields {
@@ -23,6 +23,7 @@ export default function CustomModal({
   openModalInput,
   toggleModal,
   headers,
+  endpoint
 }: Props) {
   const fields: any = useRef([]);
 
@@ -67,6 +68,8 @@ export default function CustomModal({
               submitRef={submitRef}
               headers={headers}
               toggleModal={toggleModal}
+              fetchPetition={mapResponse}
+              enpoint={endpoint}
             />
           </div>
         </Modal.Body>
