@@ -85,11 +85,11 @@ export function NoData() {
           ></path>
         </svg>
 
-        <h1 className="text-2xl font-semibold">No hay datos para mostrar</h1>
-        <p className="mt-2 mb-5">
+        <h1 className="text-2xl font-semibold text-secondary">No hay datos para mostrar</h1>
+        <p className="mt-2 mb-5 text-secondary">
           Sube tus documentos para que puedas verlos en esta sección
         </p>
-        <button className="flex border-2 rounded-lg px-10 mb-7 py-1 w-full justify-center font-bold bg-white cursor-pointer">
+        <button className="flex border-2 rounded-lg px-10 mb-7 py-1 w-full justify-center font-bold bg-white cursor-pointer text-secondary">
           Subir documentos
         </button>
       </span>

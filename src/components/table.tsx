@@ -66,7 +66,7 @@ export default function Table({
       ) : (
         <div className="relative overflow-x-auto sm:rounded-lg">
           {/* Header */}
-          <div className="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
+          <div className="flex items-center justify-between pb-4 bg-white">
             {/* Buttons */}
             <section className="flex gap-4 me-4">
               {/* Filter */}
@@ -99,16 +99,16 @@ export default function Table({
 
                 <div
                   id="dropdownFilter"
-                  className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+                  className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
                 >
                   <ul
-                    className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                    className="py-1 text-sm text-gray-700"
                     aria-labelledby="dropdownActionButton"
                   >
                     <li>
                       <a
                         href="#"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100"
                       >
                         Reward
                       </a>
@@ -116,7 +116,7 @@ export default function Table({
                     <li>
                       <a
                         href="#"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100"
                       >
                         Promote
                       </a>
@@ -124,7 +124,7 @@ export default function Table({
                     <li>
                       <a
                         href="#"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100"
                       >
                         Activate account
                       </a>
@@ -133,7 +133,7 @@ export default function Table({
                   <div className="py-1">
                     <a
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Delete User
                     </a>
@@ -170,16 +170,16 @@ export default function Table({
 
                 <div
                   id="dropdownAction"
-                  className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+                  className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
                 >
                   <ul
-                    className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                    className="py-1 text-sm text-gray-700"
                     aria-labelledby="dropdownActionButton"
                   >
                     <li>
                       <a
                         href="#"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100"
                       >
                         Reward
                       </a>
@@ -187,7 +187,7 @@ export default function Table({
                     <li>
                       <a
                         href="#"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100"
                       >
                         Promote
                       </a>
@@ -195,7 +195,7 @@ export default function Table({
                     <li>
                       <a
                         href="#"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100"
                       >
                         Activate account
                       </a>
@@ -204,7 +204,7 @@ export default function Table({
                   <div className="py-1">
                     <a
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Delete User
                     </a>
@@ -231,7 +231,7 @@ export default function Table({
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <svg
-                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    className="w-4 h-4 text-gray-500"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -257,8 +257,8 @@ export default function Table({
           </div>
 
           {/* Table */}
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-10">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500 mb-10">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               {/* Table header */}
               <tr>
                 {headers.map((header: any) => (
@@ -279,7 +279,7 @@ export default function Table({
               {dataSet &&
                 dataSet.map((data, index) => (
                   <tr
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    className="bg-white border-b hover:bg-gray-50"
                     key={"row-" + index}
                   >
                     {headers.map((header: any) => (

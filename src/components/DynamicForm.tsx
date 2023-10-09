@@ -60,7 +60,7 @@ export function DynamicForm(props: Props) {
               <>
                 <label
                   htmlFor={header.key}
-                  className="block text-sm font-medium text-dark dark:text-white"
+                  className="block text-sm font-medium text-dark"
                 >
                   {header.label}
                 </label>
