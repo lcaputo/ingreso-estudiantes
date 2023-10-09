@@ -24,9 +24,6 @@ export default function Statistics() {
     }
     getData()
   }, []);
-
-  console.log(dataStatitisc?.peopleInside);
-
   return (
     <>
       <div>

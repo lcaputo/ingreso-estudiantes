@@ -1,10 +1,10 @@
 import Select from "react-select";
 
-export function MultiSelect() {
+export function MultiSelect(roles: any) {
   const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+    { value: "1", label: "administrador" },
+    { value: "2", label: "auditor" },
+    { value: "3", label: "puesto de servicio" },
   ];
   return (
     <Select
