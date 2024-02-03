@@ -7,6 +7,7 @@ import Upload from "./pages/upload";
 import { Test } from "./pages/test";
 import { useAuthStore } from "./stores/authStore";
 import { Entry } from "./pages/entry";
+import { EntrySuccess } from "./pages/entry_success";
 
 function App() {
   const isAuthenticated = useAuthStore((state: any) => state.isAuthenticated);
@@ -21,6 +22,7 @@ function App() {
         <Route path="/upload" element={<Upload />} />
         <Route path="/test" element={<Test />} />
         <Route path="/entry" element={<Entry />} />
+        <Route path="/entry_success" element={<EntrySuccess />} />
       </Routes>
     </BrowserRouter>
   );
