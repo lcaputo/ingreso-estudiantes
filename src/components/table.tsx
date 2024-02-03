@@ -2,6 +2,8 @@ import { useState } from "react";
 import CustomModal from "./modal";
 import { Loader } from "./loader";
 import moment from "moment";
+import { Pagination } from 'flowbite-react';
+
 
 interface nameKey {
   label: string;
@@ -24,6 +26,9 @@ export default function Table({
   enpoint,
 }: Props) {
   const [openModal, setOpenModal] = useState<boolean | undefined>(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const onPageChange = (page: number) => setCurrentPage(page);
 
   function toggleModal() {
     console.log("toggle");
@@ -106,26 +111,17 @@ export default function Table({
                     aria-labelledby="dropdownActionButton"
                   >
                     <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                      >
+                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
                         Reward
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                      >
+                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
                         Promote
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                      >
+                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
                         Activate account
                       </a>
                     </li>
@@ -177,26 +173,17 @@ export default function Table({
                     aria-labelledby="dropdownActionButton"
                   >
                     <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                      >
+                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
                         Reward
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                      >
+                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
                         Promote
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                      >
+                      <a href="#" className="block px-4 py-2 hover:bg-gray-100">
                         Activate account
                       </a>
                     </li>
@@ -257,7 +244,7 @@ export default function Table({
           </div>
 
           {/* Table */}
-          <table className="w-full text-sm text-left text-gray-500 mb-10">
+          <table className="w-full text-sm text-left text-gray-500 mb-10 h-1/2">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               {/* Table header */}
               <tr>
@@ -268,7 +255,66 @@ export default function Table({
                         key={header.key}
                         className="font-semibold text-left p-4"
                       >
-                        {header.label}
+                        <div className="flex items-center">
+                          {header.label}
+                          <button data-dropdown-toggle="dropdownDefaultCheckbox">
+                            <svg
+                              className="w-3 h-3 ms-1.5"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                            </svg>
+                          </button>
+
+                          <>
+                            {/* Dropdown menu */}
+                            <div
+                              id="dropdownDefaultCheckbox"
+                              className="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                            >
+                              <ul
+                                className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownCheckboxButton"
+                              >
+                                <li>
+                                  <div className="flex items-center">
+                                    <input
+                                      id="checkbox-item-1"
+                                      type="checkbox"
+                                      defaultValue=""
+                                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                    />
+                                    <label
+                                      htmlFor="checkbox-item-1"
+                                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    >
+                                      CC
+                                    </label>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div className="flex items-center">
+                                    <input
+                                      id="checkbox-item-3"
+                                      type="checkbox"
+                                      defaultValue=""
+                                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                    />
+                                    <label
+                                      htmlFor="checkbox-item-3"
+                                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    >
+                                      TI
+                                    </label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </>
+                        </div>
                       </th>
                     )}
                   </>
@@ -318,6 +364,14 @@ export default function Table({
                   </tr>
                 ))}
             </tbody>
+
+            <div className="flex overflow-x-auto sm:justify-center">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={100}
+                onPageChange={onPageChange}
+              />
+            </div>
           </table>
         </div>
       )}

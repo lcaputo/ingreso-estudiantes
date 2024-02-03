@@ -6,84 +6,84 @@ settings:
 
 dependencies:
   flowbite:
-    specifier: 1.8.1
+    specifier: ^1.8.1
     version: 1.8.1
   flowbite-react:
-    specifier: 0.5.0
+    specifier: ^0.5.0
     version: 0.5.0(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
   moment:
-    specifier: 2.29.4
+    specifier: ^2.29.4
     version: 2.29.4
   react:
-    specifier: 18.2.0
+    specifier: ^18.2.0
     version: 18.2.0
   react-dom:
-    specifier: 18.2.0
+    specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-dropzone:
-    specifier: 14.2.3
+    specifier: ^14.2.3
     version: 14.2.3(react@18.2.0)
   react-google-charts:
-    specifier: 4.0.1
+    specifier: ^4.0.1
     version: 4.0.1(react-dom@18.2.0)(react@18.2.0)
   react-hook-form:
-    specifier: 7.45.4
+    specifier: ^7.45.4
     version: 7.45.4(react@18.2.0)
   react-hot-toast:
-    specifier: 2.4.1
+    specifier: ^2.4.1
     version: 2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
   react-router-dom:
-    specifier: 6.14.2
+    specifier: ^6.14.2
     version: 6.14.2(react-dom@18.2.0)(react@18.2.0)
   react-select:
-    specifier: 5.7.4
+    specifier: ^5.7.4
     version: 5.7.4(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
   zustand:
-    specifier: 4.4.1
+    specifier: ^4.4.1
     version: 4.4.1(@types/react@18.2.15)(react@18.2.0)
 
 devDependencies:
   '@types/node':
-    specifier: 20.4.8
+    specifier: ^20.4.8
     version: 20.4.8
   '@types/react':
-    specifier: 18.2.15
+    specifier: ^18.2.15
     version: 18.2.15
   '@types/react-dom':
-    specifier: 18.2.7
+    specifier: ^18.2.7
     version: 18.2.7
   '@typescript-eslint/eslint-plugin':
-    specifier: 6.0.0
+    specifier: ^6.0.0
     version: 6.0.0(@typescript-eslint/parser@6.0.0)(eslint@8.45.0)(typescript@5.0.2)
   '@typescript-eslint/parser':
-    specifier: 6.0.0
+    specifier: ^6.0.0
     version: 6.0.0(eslint@8.45.0)(typescript@5.0.2)
   '@vitejs/plugin-react':
-    specifier: 4.0.3
+    specifier: ^4.0.3
     version: 4.0.3(vite@4.4.5)
   autoprefixer:
-    specifier: 10.4.14
+    specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.27)
   eslint:
-    specifier: 8.45.0
+    specifier: ^8.45.0
     version: 8.45.0
   eslint-plugin-react-hooks:
-    specifier: 4.6.0
+    specifier: ^4.6.0
     version: 4.6.0(eslint@8.45.0)
   eslint-plugin-react-refresh:
-    specifier: 0.4.3
+    specifier: ^0.4.3
     version: 0.4.3(eslint@8.45.0)
   postcss:
-    specifier: 8.4.27
+    specifier: ^8.4.27
     version: 8.4.27
   tailwindcss:
-    specifier: 3.3.3
+    specifier: ^3.3.3
     version: 3.3.3
   typescript:
-    specifier: 5.0.2
+    specifier: ^5.0.2
     version: 5.0.2
   vite:
-    specifier: 4.4.5
+    specifier: ^4.4.5
     version: 4.4.5(@types/node@20.4.8)
 
 packages:

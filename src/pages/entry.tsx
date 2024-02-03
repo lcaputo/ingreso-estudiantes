@@ -1,9 +1,38 @@
 import { useState } from "react";
 import "../assets/css/entry.css";
+import { VITE_API_URL } from "../config";
+import toast from "react-hot-toast";
 
 export function Entry() {
   const [value, setValue] = useState("");
   const limit = 10;
+
+
+  function EntryPerson() {
+    fetch(`${VITE_API_URL}/records`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "person": {
+          "document": parseInt(value)
+        }
+      }),
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.ok) {
+          toast.success("Entrada")
+          setValue('')
+        } else {
+          toast.error("Error")
+        }
+      }).catch(() => {
+        toast.error("Error")
+      });
+    return;
+  }
 
   const handleNameChange = (value: any) => {
     setValue(value.slice(0, limit));
@@ -82,7 +111,7 @@ export function Entry() {
           <button  type="button"className="key" onClick={() => handleNameChange(value + "0")}>
             0
           </button>
-          <button type="button" onClick={() => submit()}  className="key">
+          <button className="key" type="button" onClick={() => EntryPerson()}>
             <svg
               width="38"
               height="38"
