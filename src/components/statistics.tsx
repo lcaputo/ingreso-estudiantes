@@ -28,16 +28,6 @@ export default function Statistics() {
     <>
       <div>
         <label htmlFor="">
-          Personas dentro: 
-        </label>
-        {dataStatitisc?.peopleInside}
-      </div>
-      <div>
-        <label htmlFor="">Conteo de entradas en las ultimas 24h: </label>
-        {dataStatitisc?.people_last_24h}
-      </div>
-      <div>
-        <label htmlFor="">
           Personas dentro:
         </label>
         {dataStatitisc?.peopleInside}
