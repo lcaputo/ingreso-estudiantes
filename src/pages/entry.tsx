@@ -2,11 +2,18 @@ import { useState } from "react";
 import "../assets/css/entry.css";
 import { VITE_API_URL } from "../config";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { usePerson } from "../hooks/usePerson";
+import { useEntry } from "../hooks/useEntry";
+import { IEntry } from "../interfaces/entry.interface";
 
 export function Entry() {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("1001789241");
   const limit = 10;
+  const { setPerson } = usePerson();
+  const { setEntry } = useEntry();
 
+  const navigate = useNavigate();
 
   function EntryPerson() {
     fetch(`${VITE_API_URL}/records`, {
@@ -25,12 +32,21 @@ export function Entry() {
         if (res.ok) {
           toast.success("Entrada")
           setValue('')
+          navigate('/entry_success')
+          return res.json();
         } else {
           toast.error("Error")
+          setValue('')
         }
-      }).catch(() => {
+      })
+      .then((res) => {
+        console.log(res.data);
+        setEntry(res.data as IEntry);
+
+      })
+      .catch(() => {
         toast.error("Error")
-      });
+      })
     return;
   }
 

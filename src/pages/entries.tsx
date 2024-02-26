@@ -2,9 +2,19 @@ import { useNavigate } from "react-router-dom";
 import AdminLayout from "../layout/admin";
 import Table from "../components/table";
 import useFetch from "../hooks/useFetch";
+import { useState } from "react";
 
 export function Entries() {
-  const { data: entries, isLoading, isError, error } = useFetch("records");
+  const [currentPage, setCurrentPage] = useState(10);
+
+  const {
+    data: entries,
+    isLoading,
+    isError,
+    error,
+    meta,
+  } = useFetch(`records?page=1&take=${currentPage}&order=ASC`);
+
 
   const columns = [
     {
@@ -49,13 +59,17 @@ export function Entries() {
   ];
 
   return (
-    <AdminLayout>
-      <Table
-        enpoint="records"
-        dataSet={entries}
-        isLoading={isLoading}
-        headers={columns}
-      />
-    </AdminLayout>
+    <>
+      <AdminLayout>
+        <Table
+          enpoint="records"
+          dataSet={entries}
+          isLoading={isLoading}
+          headers={columns}
+          meta={meta}
+          changePagiantion={setCurrentPage}
+        />
+      </AdminLayout>
+    </>
   );
 }

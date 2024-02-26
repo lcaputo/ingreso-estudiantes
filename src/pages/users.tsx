@@ -13,6 +13,7 @@ interface dataSet {
 }
 
 export default function Users() {
+  const [currentPage, setCurrentPage] = useState(10);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [users, setUsers] = useState<User[]>([]);
   const {
@@ -24,7 +25,7 @@ export default function Users() {
     data: roles,
     loading: loadingRoles,
     error: errorRoles,
-  } = useFetch("user");
+  } = useFetch(`user?page=1&take=${currentPage}&order=ASC`);
 
   useEffect(() => {}, []);
 
@@ -60,6 +61,7 @@ export default function Users() {
         dataSet={users}
         fetch={() => {}}
         isLoading={isLoading}
+        changePagiantion={setCurrentPage}
       />
     </AdminLayout>
   );

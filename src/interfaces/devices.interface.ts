@@ -1,5 +1,10 @@
 export interface Device {
-    name: string;
-    serial: string;
-    color: string;
+    id: number;
+    deviceType: DeviceType;
+    serialId: string;
+}
+
+export interface DeviceType {
+    id: number;
+    brand: string;
 }

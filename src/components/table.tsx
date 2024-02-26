@@ -16,6 +16,8 @@ interface Props {
   fetch?: () => void;
   isLoading?: boolean;
   enpoint?: string;
+  meta?: any;
+  changePagiantion?: (page: number) => void;
 }
 
 export default function Table({
@@ -24,6 +26,8 @@ export default function Table({
   fetch,
   isLoading,
   enpoint,
+  meta,
+  changePagiantion,
 }: Props) {
   const [openModal, setOpenModal] = useState<boolean | undefined>(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -364,11 +368,10 @@ export default function Table({
                   </tr>
                 ))}
             </tbody>
-
             <div className="flex overflow-x-auto sm:justify-center">
               <Pagination
                 currentPage={currentPage}
-                totalPages={100}
+                totalPages={meta != undefined && meta.hasNextPage ? meta.pageCount -1: 1}
                 onPageChange={onPageChange}
               />
             </div>

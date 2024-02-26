@@ -10,14 +10,17 @@ export function UploadsQueue() {
 
   useEffect(() => {
     const eventSource = new EventSource("http://localhost:3000/events/sse");
-    console.log(eventSource.withCredentials);
 
     eventSource.onmessage = ({ data }) => {
+      if (data == false) {
+        console.log("No data");
+
+        return;
+      }
       data = JSON.parse(data);
       if (data.length === 0) {
         eventSource.close();
       }
-      console.log(data);
       setServices(data);
       // inc();
     };

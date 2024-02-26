@@ -2,6 +2,10 @@ import { Card, Progress } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { counterStore } from "../stores/counterStore";
 
+interface EventSourceData {
+  data: Array<any> | any;
+}
+
 export function FloatButton() {
   // const [show, setShow] = useState(false);
   const services = counterStore((state: any) => state.services);
@@ -11,14 +15,13 @@ export function FloatButton() {
 
   useEffect(() => {
     const eventSource = new EventSource("http://localhost:3000/events/sse");
-    console.log(eventSource.withCredentials);
-    eventSource.onmessage = ({ data }) => {
+    eventSource.onmessage = ({ data }: EventSourceData) => {
+      console.log(typeof (data as Array<any>));
       if (!data) {
         eventSource.close();
         return;
       }
-      data = JSON.parse(data);
-      console.log(data);
+      // data = JSON.parse(data);
       setServices(data);
       // inc();
     };
