@@ -10,6 +10,7 @@ import { VITE_API_URL } from "../config";
 import { Device } from "../interfaces/devices.interface";
 import { IVehicle } from "../interfaces/vehicles.interface";
 import { IEntry } from "../interfaces/entry.interface";
+import toast from "react-hot-toast";
 
 export function EntrySuccess() {
   const [view, setView] = useState<number>(EntryViews.entry);
@@ -124,15 +125,18 @@ export function EntrySuccess() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (entry.out === false) {
+    if (entry && entry.out === false) {
       setTimeout(() => {
         setEntry({} as IEntry);
         window.location.href = "/entry";
       }, 2000);
+      toast.success("Saliste, nos vemos pronto!");
       return;
+    } else {
+      toast.success("Entrada exitosa!");
+      getDevices();
+      getVehicles();
     }
-    getDevices();
-    getVehicles();
   }, []);
 
   return (

@@ -40,12 +40,8 @@ export function Entry() {
       })
       .then((res) => {
         console.log(res.data);
+        setPerson(res.data.person);
         setEntry(res.data as IEntry);
-        if (entry.out == true) {
-          toast.error("Salida")
-        } {
-          toast.success("Entrada")
-        }
       })
       .catch(() => {
         toast.error("Error")
