@@ -11,7 +11,7 @@ export function Entry() {
   const [value, setValue] = useState("1001789241");
   const limit = 10;
   const { setPerson } = usePerson();
-  const { setEntry } = useEntry();
+  const { entry, setEntry } = useEntry();
 
   const navigate = useNavigate();
 
@@ -30,7 +30,6 @@ export function Entry() {
     })
       .then((res) => {
         if (res.ok) {
-          toast.success("Entrada")
           setValue('')
           navigate('/entry_success')
           return res.json();
@@ -42,7 +41,11 @@ export function Entry() {
       .then((res) => {
         console.log(res.data);
         setEntry(res.data as IEntry);
-
+        if (entry.out == true) {
+          toast.error("Salida")
+        } {
+          toast.success("Entrada")
+        }
       })
       .catch(() => {
         toast.error("Error")

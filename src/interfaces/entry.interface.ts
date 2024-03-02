@@ -9,6 +9,8 @@ export interface IEntry {
     idRecordVehicle: any[];
     idRecordDevice:  any[];
     entryType:       IEntryType;
+    inside:          boolean;
+    out:             boolean;
 }
 
 export interface IEntryType {

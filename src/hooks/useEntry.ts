@@ -40,5 +40,5 @@ export const useEntry = create<EntryState>((set, get) => ({
     setEntry: (x: IEntry) => {
         set({ entry: x });
     },
-    getDevices: () => get().entry.person.device
+    getDevices: () => get().entry.person.device,
 }));

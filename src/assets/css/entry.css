@@ -27,3 +27,5 @@ active:scale-95 active:duration-[0s] active:bg-primary active:text-white;
 .keyboard button:active svg {
   @apply transform scale-95 duration-[0s] fill-white;
 }
+
+

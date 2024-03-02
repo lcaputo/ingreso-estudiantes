@@ -28,4 +28,5 @@ export interface Person {
 export interface VehicleType {
     id:     number;
     vendor: string;
+    icon:   string;
 }

@@ -4,16 +4,19 @@ import { Device } from "../interfaces/devices.interface";
 import { shallow } from "zustand/shallow";
 import { EntryViews } from "../enums/EntryViews";
 import { useEntry } from "../hooks/useEntry";
-import { IVehicle } from "../interfaces/vehicles.interface";
+import { IVehicle, VehicleType } from "../interfaces/vehicles.interface";
 
 interface Props {
   view: any;
   setView: any;
+  vehicles: IVehicle[];
+  setVehicles: any;
+  getVehicles: any;
+  selectedVehiclesID: number[];
+  setSelectedVehiclesID: any;
 }
 
 const Vehicles = (props: Props) => {
-  const [selectedDevicesID, setSelectedDevicesID] = useState<number[]>([]);
-  const [vehicles, setVehicles] = useState<IVehicle[]>([]);
 
   const { entry } = useEntry((state) => ({ entry: state.entry }), shallow);
 
@@ -32,7 +35,7 @@ const Vehicles = (props: Props) => {
       })
       .then((res) => {
         console.log(res.data);
-        setVehicles(res.data);
+        props.setVehicles(res.data);
       })
       .catch(() => {
         console.log("Error getting devices");
@@ -83,51 +86,34 @@ const Vehicles = (props: Props) => {
   return (
     <>
       <div className="flex flex-col gap-5">
-        {props.view == EntryViews.vehicle_list && vehicles && vehicles.length > 0
-          ? vehicles.map((vehicle: IVehicle) => {
+        {props.view == EntryViews.vehicle_list && props.vehicles && props.vehicles.length > 0
+          ? props.vehicles.map((vehicle: IVehicle) => {
               return (
                 <a
                   className={
-                    `px-4 py-8 hover:bg-gray-200 bg-gray-100
-                  border-b-2 shadow-lg flex cursor-pointer ` +
-                    (selectedDevicesID.includes(vehicle.id)
-                      ? " border-green-500 border-opacity-50"
-                      : "border-gray-500 border-opacity-20")
+                    `px-4 py-8 bg-gray-100
+                  border-b-2 shadow-lg flex cursor-pointer border-gray-500 border-opacity-20`
                   }
                   key={vehicle.id}
                   onClick={() => {
-                    let exists = selectedDevicesID.includes(vehicle.id);
-                    console.log("exists", exists, vehicles, vehicle.id);
+                    // let exists = props.selectedVehiclesID.includes(vehicle.id);
+                    // console.log("exists", exists, props.vehicles, vehicle.id);
 
-                    if (exists) {
-                      setSelectedDevicesID(
-                        selectedDevicesID.filter((id) => id !== vehicle.id)
-                      );
-                    } else {
-                      setSelectedDevicesID([...selectedDevicesID, vehicle.id]);
-                    }
+                    props.setSelectedVehiclesID([vehicle.id]);
+                    props.setView(EntryViews.entry)
+
+                    // if (exists) {
+                    //   props.setSelectedVehiclesID(
+                    //     props.selectedVehiclesID.filter((id) => id !== vehicle.id)
+                    //   );
+                    // } else {
+                    //   props.setSelectedVehiclesID([...props.selectedVehiclesID, vehicle.id]);
+                    // }
+                    console.log("selectedVehiclesID", props.selectedVehiclesID);
+
                   }}
                 >
-                  <div className="text-green-600 my-auto">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="icon icon-tabler icon-tabler-motorbike"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M5 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                      <path d="M19 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                      <path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4" />
-                      <path d="M13 6h2l1.5 3l2 4" />
-                    </svg>
-                  </div>
+                  <img src={vehicle.vehicleType.icon} className="w-16 h-16" />
                   <div className="pl-3">
                     <p className="text-2xl font-medium text-gray-800 leading-none">
                       {vehicle.vehicleType.vendor || ""}
@@ -136,27 +122,6 @@ const Vehicles = (props: Props) => {
                       {vehicle.badge || ""}
                     </small>
                   </div>
-                  {selectedDevicesID.includes(vehicle.vehicleType.id) ? (
-                    <div className="ms-auto">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-check text-green-500"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M5 12l5 5l10 -10" />
-                      </svg>
-                    </div>
-                  ) : (
-                    ""
-                  )}
                 </a>
               );
             })
@@ -178,6 +143,34 @@ const Vehicles = (props: Props) => {
           <div className="px-4 mb-6">
             <label className="text-gray-600 text-xl">Placa</label>
             <input
+              maxLength={6}
+              onInput={(e) => {
+                let input = e.currentTarget.value;
+
+                // if not letters or numbers remove the last character
+                if (!input.match(/[A-Z0-9]/g)) {
+                  input = input.slice(0, -1);
+                }
+
+                input = input.toUpperCase();
+                // detect if the input is a letter or a number
+                // if it's a letter only allow 4 letters
+                // if it's a number only allow 3 numbers
+
+                let letters = input.match(/[A-Z]/g);
+                let numbers = input.match(/[0-9]/g);
+
+                if (letters && letters.length > 4) {
+                  input = input.slice(0, 4);
+                }
+                if (numbers && numbers.length > 3) {
+                  input = input.slice(0, 3);
+                }
+
+                e.currentTarget.value = input;
+
+
+              }}
               type="text"
               name="badge"
               placeholder="ABC123"
