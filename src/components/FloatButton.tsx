@@ -13,23 +13,32 @@ export function FloatButton() {
   const show = counterStore((state: any) => state.show);
   const setShow = counterStore((state: any) => state.setShow);
 
+  let eventSource: any;
+
   useEffect(() => {
-    const eventSource = new EventSource("http://localhost:3000/events/sse");
+    eventSource = new EventSource("http://localhost:3000/events/sse");
+    invokeSSEEventSource();
+  }, []);
+
+  function invokeSSEEventSource() {
     eventSource.onmessage = ({ data }: EventSourceData) => {
-      console.log(typeof (data as Array<any>));
-      if (!data) {
+      const d = JSON.parse(data);
+      console.log(d.length);
+      if (d.length === 0) {
         eventSource.close();
         return;
       }
       // data = JSON.parse(data);
-      setServices(data);
+      setServices(d);
       // inc();
     };
-    eventSource.onerror = (error) => {
+    eventSource.onerror = (error:any) => {
       console.log(error);
       eventSource.close();
     };
-  }, []);
+  }
+
+
 
   return (
     <div className="fixed z-90 bottom-10 right-8">

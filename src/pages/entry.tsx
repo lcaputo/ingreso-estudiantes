@@ -40,8 +40,8 @@ export function Entry() {
       })
       .then((res) => {
         console.log(res.data);
-        setPerson(res.data.person);
         setEntry(res.data as IEntry);
+        setPerson(res.data.person);
       })
       .catch(() => {
         toast.error("Error")

@@ -19,6 +19,12 @@ export function EntrySuccess() {
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
   const [selectedVehiclesID, setSelectedVehiclesID] = useState<number[]>([]);
 
+
+  const { entry } = useEntry(
+    (state) => ({ entry: state.entry }),
+    shallow
+  );
+
   function getDevices() {
     fetch(`${VITE_API_URL}/device/person/${entry.person.id}`, {
       method: "GET",
@@ -117,21 +123,18 @@ export function EntrySuccess() {
     });
   }
 
-  const { entry, setEntry } = useEntry(
-    (state) => ({ entry: state.entry, setEntry: state.setEntry }),
-    shallow
-  );
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (entry && entry.out === false) {
-      setTimeout(() => {
-        setEntry({} as IEntry);
-        window.location.href = "/entry";
-      }, 2000);
+    console.log('===>',entry);
+
+    if (entry && entry.inside === false) {
       toast.success("Saliste, nos vemos pronto!");
-      return;
+      setTimeout(() => {
+        // navigate("/entry");
+      }
+      , 2000);
     } else {
       toast.success("Entrada exitosa!");
       getDevices();
@@ -392,7 +395,7 @@ export function EntrySuccess() {
       ) : (
         <>
           {/* print check-out view */}
-          <div className="w-100 text-center mt-8 flex flex-col items-center">
+          <div className="w-100 flex items-center h-screen">
             <h1 className="text-4xl font-bold text-black mb-8 w-96 text-left border-b two-lines-text-elipsis">
               <small className="text-black text-xl">
                 {view === EntryViews.entry ? "Programa:" : "Registro:"}

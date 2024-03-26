@@ -24,10 +24,10 @@ export default function Login() {
       credentials: "include",
     });
     const data = await res.json();
-    console.log(data);
+    console.log(data.access_token);
     if (data) {
       toast.success("Login Success");
-      setToken(data);
+      setToken(data.access_token);
       navigate("/users");
     } else {
       toast.error("Login Failed");

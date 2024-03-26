@@ -1,6 +1,17 @@
 import { create } from 'zustand'
 
-export const counterStore = create((set) => ({
+interface CounterStore {
+  count: number
+  services: any[]
+  uploading: boolean
+  show: boolean
+  inc: (num: number) => void
+  setServices: (services: any) => void
+  setUploading: (uploading: boolean) => void
+  setShow: (show: boolean) => void
+}
+
+export const counterStore = create<CounterStore>((set) => ({
   count: 0,
   services: [],
   uploading: false,

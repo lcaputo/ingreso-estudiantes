@@ -1,6 +1,6 @@
 import Select from "react-select";
 
-export function MultiSelect(roles: any) {
+export function MultiSelect(key: any) {
   const options = [
     { value: "1", label: "administrador" },
     { value: "2", label: "auditor" },
@@ -8,6 +8,7 @@ export function MultiSelect(roles: any) {
   ];
   return (
     <Select
+      {...key}
       options={options}
       isMulti={true}
       isClearable={false}

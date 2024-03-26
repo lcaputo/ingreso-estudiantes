@@ -33,7 +33,7 @@ export function UploadsQueue() {
   return (
     <div className="px-10 h-96 flex flex-col justify-center align-middle m-auto w-96">
       <h1>UploadsQueue</h1>
-      {services.map((s: any) => <Progress className="w-96" progress={s.progress} />)}
+      {services && services.map((s: any) => <Progress className="w-96" progress={s.progress} />)}
     </div>
   );
 }

@@ -5,7 +5,7 @@ export function Success() {
     const navigate = useNavigate();
     useEffect(() => {
         setTimeout(() => {
-            navigate("/entry");
+            window.location.href = "/entry";
         }, 2000)
     }, [])
     return (

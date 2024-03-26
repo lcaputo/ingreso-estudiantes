@@ -13,26 +13,26 @@ interface nameKey {
 interface Props {
   headers: nameKey[];
   dataSet?: any[];
-  fetch?: () => void;
+  fetchData?: any;
   isLoading?: boolean;
   enpoint?: string;
   meta?: any;
-  changePagiantion?: (page: number) => void;
 }
 
 export default function Table({
   headers,
   dataSet,
-  fetch,
+  fetchData,
   isLoading,
   enpoint,
   meta,
-  changePagiantion,
 }: Props) {
   const [openModal, setOpenModal] = useState<boolean | undefined>(false);
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const onPageChange = (page: number) => setCurrentPage(page);
+  const onPageChange = (page: number) => {
+    console.log('change page', page);
+    fetchData(page);
+  };
 
   function toggleModal() {
     console.log("toggle");
@@ -79,7 +79,7 @@ export default function Table({
             {/* Buttons */}
             <section className="flex gap-4 me-4">
               {/* Filter */}
-              <div>
+              {/* <div>
                 <button
                   id="dropdownActionButton"
                   data-dropdown-toggle="dropdownFilter"
@@ -139,9 +139,9 @@ export default function Table({
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* Actions */}
-              <div>
+              {/* <div>
                 <button
                   id="dropdownActionButton"
                   data-dropdown-toggle="dropdownAction"
@@ -201,7 +201,7 @@ export default function Table({
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* New */}
               <div>
                 <button
@@ -215,7 +215,7 @@ export default function Table({
             </section>
 
             {/* Search */}
-            <section>
+            {/* <section>
               <label htmlFor="table-search" className="sr-only">
                 Search
               </label>
@@ -244,7 +244,7 @@ export default function Table({
                   placeholder="Search for users"
                 />
               </div>
-            </section>
+            </section> */}
           </div>
 
           {/* Table */}
@@ -262,7 +262,7 @@ export default function Table({
                         <div className="flex items-center">
                           {header.label}
                           <button data-dropdown-toggle="dropdownDefaultCheckbox">
-                            <svg
+                            {/* <svg
                               className="w-3 h-3 ms-1.5"
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
@@ -270,7 +270,7 @@ export default function Table({
                               viewBox="0 0 24 24"
                             >
                               <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg>
+                            </svg> */}
                           </button>
 
                           <>
@@ -370,9 +370,10 @@ export default function Table({
             </tbody>
             <div className="flex overflow-x-auto sm:justify-center">
               <Pagination
-                currentPage={currentPage}
-                totalPages={meta != undefined && meta.hasNextPage ? meta.pageCount -1: 1}
+                currentPage={meta.page}
+                totalPages={meta.pageCount}
                 onPageChange={onPageChange}
+                showIcons
               />
             </div>
           </table>
@@ -383,6 +384,8 @@ export default function Table({
         toggleModal={toggleModal}
         headers={headers}
         endpoint={enpoint}
+        dataSet={dataSet}
+        fetchData={fetchData}
       />
     </>
   );

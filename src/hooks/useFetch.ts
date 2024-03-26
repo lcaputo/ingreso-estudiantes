@@ -10,7 +10,8 @@ const ACTIONS = {
 const initialState = {
   data: [],
   loading: false,
-  error: null
+  error: null,
+  meta: {},
 };
 
 function reducer(state: any, { type, payload }: any) {

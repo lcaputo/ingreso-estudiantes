@@ -86,6 +86,7 @@ const Vehicles = (props: Props) => {
   return (
     <>
       <div className="flex flex-col gap-5">
+
         {props.view == EntryViews.vehicle_list && props.vehicles && props.vehicles.length > 0
           ? props.vehicles.map((vehicle: IVehicle) => {
               return (
@@ -126,6 +127,37 @@ const Vehicles = (props: Props) => {
               );
             })
           : ""}
+
+
+<a
+                  className={
+                    `px-4 py-8 bg-gray-100
+                  border-b-2 shadow-lg flex cursor-pointer border-gray-500 border-opacity-20`
+                  }
+                  onClick={() => {
+                    // let exists = props.selectedVehiclesID.includes(vehicle.id);
+                    // console.log("exists", exists, props.vehicles, vehicle.id);
+
+                    props.setSelectedVehiclesID([]);
+                    props.setView(EntryViews.entry)
+
+                    // if (exists) {
+                    //   props.setSelectedVehiclesID(
+                    //     props.selectedVehiclesID.filter((id) => id !== vehicle.id)
+                    //   );
+                    // } else {
+                    //   props.setSelectedVehiclesID([...props.selectedVehiclesID, vehicle.id]);
+                    // }
+                    console.log("selectedVehiclesID", props.selectedVehiclesID);
+
+                  }}
+                >
+                  <div className="pl-3">
+                    <p className="text-2xl font-medium text-gray-800 leading-none">
+                      Ninguno
+                    </p>
+                  </div>
+                </a>
       </div>
 
       {props.view === EntryViews.vehicle_create && (

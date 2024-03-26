@@ -2,18 +2,26 @@ import { useNavigate } from "react-router-dom";
 import AdminLayout from "../layout/admin";
 import Table from "../components/table";
 import useFetch from "../hooks/useFetch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { VITE_API_URL } from "../config";
 
 export function Entries() {
-  const [currentPage, setCurrentPage] = useState(10);
+  const [entries, setEntries] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const {
-    data: entries,
-    isLoading,
-    isError,
-    error,
-    meta,
-  } = useFetch(`records?page=1&take=${currentPage}&order=ASC`);
+  function getEntries(page: number = 1) {
+    fetch(VITE_API_URL + `/records?page=${page}&take=10&order=ASC`).then((res) => {
+      return res.json();
+    }).then((data) => {
+      setEntries(data);
+      setIsLoading(false);
+    })
+  };
+
+  useEffect(() => {
+    console.log(entries);
+    getEntries();
+  }, [])
 
 
   const columns = [
@@ -61,14 +69,16 @@ export function Entries() {
   return (
     <>
       <AdminLayout>
-        <Table
+        {entries && (
+          <Table
           enpoint="records"
-          dataSet={entries}
+          dataSet={entries.data}
           isLoading={isLoading}
           headers={columns}
-          meta={meta}
-          changePagiantion={setCurrentPage}
+          meta={entries.meta}
+          fetchData={getEntries}
         />
+        )}
       </AdminLayout>
     </>
   );
