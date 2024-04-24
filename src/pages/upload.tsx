@@ -17,7 +17,7 @@ export default function Upload() {
   let eventSource: any
 
   useEffect(() => {
-
+    invokeSSEEventSource()
   }, [])
 
 
@@ -32,10 +32,13 @@ export default function Upload() {
 
       setServices(d);
 
-      if (d.length === 0) {
-        eventSource.close();
-        return;
-      }
+      // FIXME: this is not working
+      // if (d.length === 0) {
+      //   eventSource.close();
+      //   return;
+      // }
+
+
       // inc();
     };
     eventSource.onerror = (error:any) => {
@@ -47,8 +50,6 @@ export default function Upload() {
 
 
   const submitFiles = async (files: any) => {
-    invokeSSEEventSource();
-
     await files.forEach(async (file: any) => {
       let form = new FormData();
       form.append("file", file);
@@ -96,7 +97,7 @@ export default function Upload() {
           </section>
         )}
       </Dropzone>
-      {/* <input
+      <input
         type="file"
         onChange={(event: any) => {
           console.log(event);
@@ -110,11 +111,12 @@ export default function Upload() {
           await fetch("http://localhost:3000/events/upload", {
             method: "POST",
             body: form,
+            credentials: "include",
           });
         }}
       >
         test
-      </button> */}
+      </button>
     </AdminLayout>
   );
 }

@@ -129,18 +129,19 @@ export function EntrySuccess() {
   useEffect(() => {
     console.log('===>',entry);
 
-    if (entry && entry.inside === false) {
-      toast.success("Saliste, nos vemos pronto!");
-      setTimeout(() => {
-        // navigate("/entry");
-      }
-      , 2000);
+    if (entry && entry.id === 0) {
+      return
     } else {
-      toast.success("Entrada exitosa!");
-      getDevices();
-      getVehicles();
+      if(entry.out === true) {
+        toast.success("Saliste, nos vemos pronto!");
+        window.location.href = "/exit";
+      } else {
+        toast.success("Entrada exitosa!");
+        getDevices();
+        getVehicles();
+      }
     }
-  }, []);
+  }, [entry]);
 
   return (
     <>
@@ -235,7 +236,7 @@ export function EntrySuccess() {
                         </a>
                         <div
                           className="device-list"
-                          style={{ maxHeight: "192px", overflow: "scroll" }}
+                          style={{ maxHeight: "192px", overflowY: "scroll" }}
                         >
                           {devices.length > 0 &&
                             devices.map((device) => {
@@ -313,7 +314,7 @@ export function EntrySuccess() {
                         </a>
                         <div
                           className="device-list"
-                          style={{ maxHeight: "192px", overflow: "scroll" }}
+                          style={{ maxHeight: "192px", overflowY: "scroll" }}
                         >
                           {vehicles.length > 0 &&
                             vehicles.map((vehicle: IVehicle) => {

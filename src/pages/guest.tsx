@@ -34,6 +34,10 @@ export default function () {
     })
       .then((res) => {
         if (res.ok) {
+          toast.success("Usuario Registrado");
+          setTimeout(() => {
+            window.location.href = "/entry";
+          }, 2000);
           return res.json();
         } else {
           toast.error("Error");
@@ -78,6 +82,7 @@ export default function () {
         <form className="flex flex-col mx-auto" onSubmit={handleSubmit(submit)}>
           <label>Nombres</label>
           <input
+          className="w-full border-b-2 border-gray-300 py-2"
             type="text"
             {...register("firstName", {
               required: true,
@@ -91,6 +96,7 @@ export default function () {
           <br />
           <label>Apellidos</label>
           <input
+          className="w-full border-b-2 border-gray-300 py-2"
             type="text"
             {...register("lastName", {
               required: true,
@@ -104,6 +110,7 @@ export default function () {
           <br />
           <label>Tipo de identificación</label>
           <select
+          className="w-full border-b-2 border-gray-300 py-2"
             {...register("docType", {
               required: true,
             })}
@@ -125,7 +132,8 @@ export default function () {
           <br />
           <label>Numero de documento</label>
           <input
-            type="number"
+          className="w-full border-b-2 border-gray-300 py-2"
+          type="number"
             {...register("document", {
               required: true,
             })}

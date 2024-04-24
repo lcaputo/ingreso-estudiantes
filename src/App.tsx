@@ -15,6 +15,7 @@ import History from "./pages/history";
 import Guest from "./pages/guest";
 import { useSymbologyScanner } from "@use-symbology-scanner/react";
 import { Scanner } from "./pages/scanner";
+import Exit from "./pages/exit";
 
 function App() {
   const isAuthenticated = useAuthStore((state: any) => state.isAuthenticated());
@@ -67,6 +68,7 @@ function App() {
           <Route path="/success" element={<Success />} />
           <Route path="/guest" element={<Guest />} />
           <Route path="/scanner" element={<Scanner />} />
+          <Route path="/exit" element={<Exit />} />
         </Routes>
       </BrowserRouter>
   );

@@ -37,7 +37,7 @@ export const useEntry = create<EntryState>((set, get) => ({
       id: 0,
       type: "",
     },
-    out: false,
+    out: true,
     inside: false,
   },
   setEntry: (x: IEntry) => {
