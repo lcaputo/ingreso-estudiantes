@@ -27,22 +27,6 @@ export default function Statistics() {
   return (
     <>
       <div>
-        <label htmlFor="">
-          Personas dentro: 
-        </label>
-        {dataStatitisc?.peopleInside}
-      </div>
-      <div>
-        <label htmlFor="">Conteo de entradas en las ultimas 24h: </label>
-        {dataStatitisc?.people_last_24h}
-      </div>
-      <div>
-        <label htmlFor="">
-          Personas dentro:
-        </label>
-        {dataStatitisc?.peopleInside}
-      </div>
-      <div>
         <label htmlFor="">Conteo de entradas en las ultimas 24h: </label>
         {dataStatitisc?.people_last_24h}
       </div>
@@ -76,6 +60,24 @@ export default function Statistics() {
           </dl>
         </div>
       </div>
+      <div>
+        <label className="text-secondary dark:text-gray-400">
+          Personas dentro: {dataStatitisc?.peopleInside}
+        </label>
+        
+      </div>
+      <div>
+        <label className="text-secondary dark:text-gray-400">Conteo de entradas en las ultimas 24h: {dataStatitisc?.people_last_24h}</label>
+        
+      </div>
+      <div>
+        <label htmlFor="">
+          Personas dentro:
+        </label>
+        {dataStatitisc?.peopleInside}
+      </div>
+      
+
       <div className="w-1/2 text-sm ">
 
         {
