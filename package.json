@@ -10,10 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@use-symbology-scanner/core": "^1.0.3",
+    "@use-symbology-scanner/react": "^1.0.3",
+    "barcode-reader": "^1.6.1",
     "flowbite": "1.8.1",
     "flowbite-react": "0.5.0",
     "moment": "2.29.4",
     "react": "18.2.0",
+    "react-barcode-reader": "^0.0.2",
     "react-dom": "18.2.0",
     "react-dropzone": "14.2.3",
     "react-google-charts": "4.0.1",
@@ -21,6 +25,7 @@
     "react-hot-toast": "2.4.1",
     "react-router-dom": "6.14.2",
     "react-select": "5.7.4",
+    "use-scan-detection": "^0.2.3",
     "zustand": "4.4.1"
   },
   "devDependencies": {

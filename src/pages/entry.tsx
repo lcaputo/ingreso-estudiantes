@@ -22,20 +22,20 @@ export function Entry() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "person": {
-          "document": parseInt(value)
-        }
+        person: {
+          document: parseInt(value),
+        },
       }),
       credentials: "include",
     })
       .then((res) => {
         if (res.ok) {
-          setValue('')
-          navigate('/entry_success')
+          setValue("");
+          navigate("/entry_success");
           return res.json();
         } else {
-          toast.error("Error")
-          setValue('')
+          toast.error("Error");
+          setValue("");
         }
       })
       .then((res) => {
@@ -44,8 +44,8 @@ export function Entry() {
         setPerson(res.data.person);
       })
       .catch(() => {
-        toast.error("Error")
-      })
+        toast.error("Error");
+      });
     return;
   }
 
@@ -56,9 +56,30 @@ export function Entry() {
     if (value.length == limit) {
       console.log("submitted");
     }
-  }
+  };
   return (
     <>
+      <div className="fixed top-0 w-full">
+        <button className="flex items-center gap-2 me-10 bottom-0 my-8 float-right px-7 py-4 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full focus:outline-none" onClick={() => navigate("/guest")}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-user"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+          </svg>
+          Invitado
+        </button>
+      </div>
       <div className="screen">
         <div className="keyboard">
           <div className="display">
@@ -69,35 +90,71 @@ export function Entry() {
               className="w-96 text-4xl bg-transparent tracking-[10px] select-auto focus:outline-none border-gray-300 rounded-xl text-center text-gray-600"
             />
           </div>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "1")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "1")}
+          >
             1
           </button>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "2")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "2")}
+          >
             2
           </button>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "3")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "3")}
+          >
             3
           </button>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "4")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "4")}
+          >
             4
           </button>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "5")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "5")}
+          >
             5
           </button>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "6")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "6")}
+          >
             6
           </button>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "7")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "7")}
+          >
             7
           </button>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "8")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "8")}
+          >
             8
           </button>
-          <button  type="button"  className="key" onClick={() => handleNameChange(value + "9")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "9")}
+          >
             9
           </button>
-          <button  type="button"
-
+          <button
+            type="button"
             className="key"
             onClick={() => handleNameChange(value.slice(0, -1))}
           >
@@ -123,7 +180,11 @@ export function Entry() {
               </defs>
             </svg>
           </button>
-          <button  type="button"className="key" onClick={() => handleNameChange(value + "0")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "0")}
+          >
             0
           </button>
           <button className="key" type="button" onClick={() => EntryPerson()}>

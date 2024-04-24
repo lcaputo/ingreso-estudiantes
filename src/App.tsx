@@ -9,9 +9,12 @@ import { useAuthStore } from "./stores/authStore";
 import { Entry } from "./pages/entry";
 import { EntrySuccess } from "./pages/entry_success";
 import { Success } from "./pages/success";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { VITE_API_URL } from "./config";
 import History from "./pages/history";
+import Guest from "./pages/guest";
+import { useSymbologyScanner } from "@use-symbology-scanner/react";
+import { Scanner } from "./pages/scanner";
 
 function App() {
   const isAuthenticated = useAuthStore((state: any) => state.isAuthenticated());
@@ -22,44 +25,50 @@ function App() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "include": "credentials"
+        include: "credentials",
       },
       credentials: "include",
-    }).then((res) => {
-      if (res.status === 401) {
-        console.log("Unauthorized");
-        setToken("");
-      }
-      if (res.status === 200) {
-        console.log("Authorized");
-        return res.json();
-      }
-    }
-    ).then((data) => {
-      console.log(data);
-
-      if (data) {
-        setToken(data.token);
-      }
     })
-  }, [])
+      .then((res) => {
+        if (res.status === 401) {
+          console.log("Unauthorized");
+          setToken("");
+        }
+        if (res.status === 200) {
+          console.log("Authorized");
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+
+        if (data) {
+          setToken(data.token);
+        }
+      });
+  }, []);
+
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={
-          isAuthenticated ? <Dashboard /> : <Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/persons" element={<Entries />} />
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/history" element={<History />} />
-        {/* <Route path="/test" element={<Test />} /> */}
-        <Route path="/entry" element={<Entry />} />
-        <Route path="/entry_success" element={<EntrySuccess />} />
-        <Route path="/success" element={<Success />} />
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={isAuthenticated ? <Dashboard /> : <Login />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/persons" element={<Entries />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/history" element={<History />} />
+          {/* <Route path="/test" element={<Test />} /> */}
+          <Route path="/entry" element={<Entry />} />
+          <Route path="/entry_success" element={<EntrySuccess />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/guest" element={<Guest />} />
+          <Route path="/scanner" element={<Scanner />} />
+        </Routes>
+      </BrowserRouter>
   );
 }
 
