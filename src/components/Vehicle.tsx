@@ -1,0 +1,264 @@
+import { useEffect, useState } from "react";
+import { usePerson } from "../hooks/usePerson";
+import { Device } from "../interfaces/devices.interface";
+import { shallow } from "zustand/shallow";
+import { EntryViews } from "../enums/EntryViews";
+import { useEntry } from "../hooks/useEntry";
+import { IVehicle, VehicleType } from "../interfaces/vehicles.interface";
+
+interface Props {
+  view: any;
+  setView: any;
+  vehicles: IVehicle[];
+  setVehicles: any;
+  getVehicles: any;
+  selectedVehiclesID: number[];
+  setSelectedVehiclesID: any;
+}
+
+const Vehicles = (props: Props) => {
+
+  const { entry } = useEntry((state) => ({ entry: state.entry }), shallow);
+
+  function getDevices() {
+    fetch("http://localhost:3000/vehicle", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        console.log(res.data);
+        props.setVehicles(res.data);
+      })
+      .catch(() => {
+        console.log("Error getting devices");
+      });
+  }
+
+  useEffect(() => {
+    getDevices();
+    console.log("view", props.view);
+  }, []);
+
+  function submit(event: any) {
+    event.preventDefault();
+    // get form keys
+    const form = event.target;
+    const data = new FormData(form);
+    const object: any = {};
+    data.forEach(function (value, key) {
+      object[key] = value;
+    });
+    fetch("http://localhost:3000/records/vehicle", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        idVehicleType: parseInt(object.idVehicleType),
+        badge: object.badge,
+        idRecord: entry.id,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        console.log(res.data);
+        getDevices();
+        props.setView(EntryViews.vehicle_list);
+      })
+      .catch(() => {
+        console.log("Error getting devices");
+      });
+  }
+
+  return (
+    <>
+      <div className="flex flex-col gap-5">
+
+        {props.view == EntryViews.vehicle_list && props.vehicles && props.vehicles.length > 0
+          ? props.vehicles.map((vehicle: IVehicle) => {
+              return (
+                <a
+                  className={
+                    `px-4 py-8 bg-gray-100
+                  border-b-2 shadow-lg flex cursor-pointer border-gray-500 border-opacity-20`
+                  }
+                  key={vehicle.id}
+                  onClick={() => {
+                    // let exists = props.selectedVehiclesID.includes(vehicle.id);
+                    // console.log("exists", exists, props.vehicles, vehicle.id);
+
+                    props.setSelectedVehiclesID([vehicle.id]);
+                    props.setView(EntryViews.entry)
+
+                    // if (exists) {
+                    //   props.setSelectedVehiclesID(
+                    //     props.selectedVehiclesID.filter((id) => id !== vehicle.id)
+                    //   );
+                    // } else {
+                    //   props.setSelectedVehiclesID([...props.selectedVehiclesID, vehicle.id]);
+                    // }
+                    console.log("selectedVehiclesID", props.selectedVehiclesID);
+
+                  }}
+                >
+                  <img src={vehicle.vehicleType.icon} className="w-16 h-16" />
+                  <div className="pl-3">
+                    <p className="text-2xl font-medium text-gray-800 leading-none">
+                      {vehicle.vehicleType.vendor || ""}
+                    </p>
+                    <small className="text-gray-500">
+                      {vehicle.badge || ""}
+                    </small>
+                  </div>
+                </a>
+              );
+            })
+          : ""}
+
+
+<a
+                  className={
+                    `px-4 py-8 bg-gray-100
+                  border-b-2 shadow-lg flex cursor-pointer border-gray-500 border-opacity-20`
+                  }
+                  onClick={() => {
+                    // let exists = props.selectedVehiclesID.includes(vehicle.id);
+                    // console.log("exists", exists, props.vehicles, vehicle.id);
+
+                    props.setSelectedVehiclesID([]);
+                    props.setView(EntryViews.entry)
+
+                    // if (exists) {
+                    //   props.setSelectedVehiclesID(
+                    //     props.selectedVehiclesID.filter((id) => id !== vehicle.id)
+                    //   );
+                    // } else {
+                    //   props.setSelectedVehiclesID([...props.selectedVehiclesID, vehicle.id]);
+                    // }
+                    console.log("selectedVehiclesID", props.selectedVehiclesID);
+
+                  }}
+                >
+                  <div className="pl-3">
+                    <p className="text-2xl font-medium text-gray-800 leading-none">
+                      Ninguno
+                    </p>
+                  </div>
+                </a>
+      </div>
+
+      {props.view === EntryViews.vehicle_create && (
+        <form onSubmit={submit}>
+          <div className="px-4 mb-6">
+            <label className="text-gray-600 text-xl">Tipo</label>
+            <select
+              name="idVehicleType"
+              className="w-full border-b-2 border-gray-300 py-2"
+            >
+              <option value="1">Moto</option>
+              <option value="2">Carro</option>
+            </select>
+          </div>
+          <div className="px-4 mb-6">
+            <label className="text-gray-600 text-xl">Placa</label>
+            <input
+              maxLength={6}
+              onInput={(e) => {
+                let input = e.currentTarget.value;
+
+                // if not letters or numbers remove the last character
+                if (!input.match(/[A-Z0-9]/g)) {
+                  input = input.slice(0, -1);
+                }
+
+                input = input.toUpperCase();
+                // detect if the input is a letter or a number
+                // if it's a letter only allow 4 letters
+                // if it's a number only allow 3 numbers
+
+                let letters = input.match(/[A-Z]/g);
+                let numbers = input.match(/[0-9]/g);
+
+                if (letters && letters.length > 4) {
+                  input = input.slice(0, 4);
+                }
+                if (numbers && numbers.length > 3) {
+                  input = input.slice(0, 3);
+                }
+
+                e.currentTarget.value = input;
+
+
+              }}
+              type="text"
+              name="badge"
+              placeholder="ABC123"
+              className="w-full border-b-2 border-gray-300 py-2 placeholder-gray-300"
+            />
+          </div>
+          <button
+            className="mt-14 py-5 bg-primary text-white w-full rounded-md"
+            type="submit"
+          >
+            Guardar
+          </button>
+          <button
+            className="mt-4 py-5 bg-gray-300 text-black w-full rounded-md"
+            onClick={() => {
+              if (props.view === EntryViews.vehicle_create) {
+                props.setView(EntryViews.vehicle_list);
+              }
+              if (props.view === EntryViews.vehicle_list) {
+                props.setView(EntryViews.entry);
+              }
+            }}
+          >
+            Atras
+          </button>
+        </form>
+      )}
+
+      {props.view === EntryViews.vehicle_list && (
+        <>
+          <button
+            className="mt-14 py-5 bg-[#1F2937] text-white w-full rounded-md"
+            onClick={() => {
+              props.setView(EntryViews.vehicle_create);
+            }}
+          >
+            {props.view === EntryViews.vehicle_create
+              ? "Guardar"
+              : "Nuevo vehiculo"}
+          </button>
+          <button
+            className="mt-4 py-5 bg-primary text-white w-full rounded-md"
+            onClick={() => {
+              if (props.view === EntryViews.vehicle_create) {
+                props.setView(EntryViews.vehicle_list);
+              }
+              if (props.view === EntryViews.vehicle_list) {
+                props.setView(EntryViews.entry);
+              }
+            }}
+          >
+            Listo
+          </button>
+        </>
+      )}
+    </>
+  );
+};
+export default Vehicles;

@@ -24,10 +24,10 @@ export default function Login() {
       credentials: "include",
     });
     const data = await res.json();
-    console.log(data);
+    console.log(data.access_token);
     if (data) {
       toast.success("Login Success");
-      setToken(data);
+      setToken(data.access_token);
       navigate("/users");
     } else {
       toast.error("Login Failed");
@@ -36,13 +36,6 @@ export default function Login() {
 
   return (
     <section id="login" className="bg-gray-50">
-      <button
-        onClick={() => {
-          navigate("/test");
-        }}
-      >
-        test
-      </button>
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 h-screen">
         <span className="flex gap-2 mb-5">
           <Logo />
@@ -84,33 +77,6 @@ export default function Login() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   required
                 />
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      aria-describedby="remember"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
-                      required
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline"
-                >
-                  Forgot password?
-                </a>
               </div>
               <button
                 type="submit"

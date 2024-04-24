@@ -1,4 +1,4 @@
-import Statistics from "../components/Statistics";
+import Statistics from "../components/statistics";
 import AdminLayout from "../layout/admin";
 
 export default function Dashboard() {

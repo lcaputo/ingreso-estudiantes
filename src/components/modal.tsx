@@ -12,6 +12,8 @@ interface Props {
   toggleModal: () => void;
   headers: any;
   endpoint?: string;
+  dataSet?: any;
+  fetchData: any
 }
 
 interface ColumnFields {
@@ -23,7 +25,9 @@ export default function CustomModal({
   openModalInput,
   toggleModal,
   headers,
-  endpoint
+  endpoint,
+  dataSet,
+  fetchData
 }: Props) {
   const fields: any = useRef([]);
 
@@ -68,8 +72,9 @@ export default function CustomModal({
               submitRef={submitRef}
               headers={headers}
               toggleModal={toggleModal}
-              fetchPetition={mapResponse}
+              fetchPetition={fetchData}
               enpoint={endpoint}
+              dataSet={dataSet}
             />
           </div>
         </Modal.Body>
@@ -80,7 +85,7 @@ export default function CustomModal({
             </Button>
             <Button
             className="bg-primary text-white font-bold hover:bg-primary" onClick={() => {
-              submitRef.current.requestSubmit();
+              submitRef.current.requestSubmit()
             }}>Enviar</Button>
           </div>
         </Modal.Footer>

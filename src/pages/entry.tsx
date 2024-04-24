@@ -1,52 +1,160 @@
 import { useState } from "react";
 import "../assets/css/entry.css";
+import { VITE_API_URL } from "../config";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { usePerson } from "../hooks/usePerson";
+import { useEntry } from "../hooks/useEntry";
+import { IEntry } from "../interfaces/entry.interface";
 
 export function Entry() {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("1001789241");
   const limit = 10;
+  const { setPerson } = usePerson();
+  const { entry, setEntry } = useEntry();
+
+  const navigate = useNavigate();
+
+  function EntryPerson() {
+    fetch(`${VITE_API_URL}/records`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        person: {
+          document: parseInt(value),
+        },
+      }),
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.ok) {
+          setValue("");
+          navigate("/entry_success");
+          return res.json();
+        } else {
+          toast.error("Error");
+          setValue("");
+        }
+      })
+      .then((res) => {
+        console.log(res.data);
+        setEntry(res.data as IEntry);
+        setPerson(res.data.person);
+      })
+      .catch(() => {
+        toast.error("Error");
+      });
+    return;
+  }
 
   const handleNameChange = (value: any) => {
     setValue(value.slice(0, limit));
   };
+  const submit = () => {
+    if (value.length == limit) {
+      console.log("submitted");
+    }
+  };
   return (
     <>
+      <div className="fixed top-0 w-full">
+        <button className="flex items-center gap-2 me-10 bottom-0 my-8 float-right px-7 py-4 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full focus:outline-none" onClick={() => navigate("/guest")}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-user"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+          </svg>
+          Invitado
+        </button>
+      </div>
       <div className="screen">
         <div className="keyboard">
           <div className="display">
             <input
               type="text"
+              readOnly
               value={value}
               className="w-96 text-4xl bg-transparent tracking-[10px] select-auto focus:outline-none border-gray-300 rounded-xl text-center text-gray-600"
             />
           </div>
-          <button className="key" onClick={() => handleNameChange(value + "1")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "1")}
+          >
             1
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "2")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "2")}
+          >
             2
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "3")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "3")}
+          >
             3
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "4")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "4")}
+          >
             4
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "5")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "5")}
+          >
             5
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "6")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "6")}
+          >
             6
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "7")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "7")}
+          >
             7
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "8")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "8")}
+          >
             8
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "9")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "9")}
+          >
             9
           </button>
           <button
+            type="button"
             className="key"
             onClick={() => handleNameChange(value.slice(0, -1))}
           >
@@ -57,7 +165,7 @@ export function Entry() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_203_28)">
+              <g clipPath="url(#clip0_203_28)">
                 <path d="M29.7915 24.5351L27.6178 26.7088L22.0832 21.1742L16.5486 26.7088L14.3749 24.5351L19.9095 19.0005L14.3749 13.4659L16.5486 11.2922L22.0832 16.8267L27.6178 11.2922L29.7915 13.4659L24.257 19.0005L29.7915 24.5351ZM34.4165 5.12549C35.2343 5.12549 36.0186 5.45034 36.5968 6.02858C37.175 6.60681 37.4999 7.39107 37.4999 8.20882V29.7922C37.4999 30.6099 37.175 31.3942 36.5968 31.9724C36.0186 32.5506 35.2343 32.8755 34.4165 32.8755H11.2915C10.2278 32.8755 9.39529 32.3205 8.84029 31.5034L0.499878 19.0005L8.84029 6.48216C9.39529 5.66507 10.2278 5.12549 11.2915 5.12549H34.4165ZM34.4165 8.20882H11.2915L4.01488 19.0005L11.2915 29.7922H34.4165V8.20882Z" />
               </g>
               <defs>
@@ -72,10 +180,14 @@ export function Entry() {
               </defs>
             </svg>
           </button>
-          <button className="key" onClick={() => handleNameChange(value + "0")}>
+          <button
+            type="button"
+            className="key"
+            onClick={() => handleNameChange(value + "0")}
+          >
             0
           </button>
-          <button className="key">
+          <button className="key" type="button" onClick={() => EntryPerson()}>
             <svg
               width="38"
               height="38"
