@@ -14,7 +14,7 @@ export function Success() {
           <circle
             fill="none"
             stroke="#68E534"
-            stroke-width="20"
+            strokeWidth="20"
             cx="200"
             cy="200"
             r="190"

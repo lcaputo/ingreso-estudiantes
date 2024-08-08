@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Table from "../components/table";
 import AdminLayout from "../layout/admin";
 import useFetch from "../hooks/useFetch";
+import { VITE_API_URL } from "../config";
 
 interface dataSet {
   name: string;
@@ -30,7 +31,7 @@ export default function Users() {
 
   function getUsers(page: number = 1) {
     setIsLoading(true);
-    fetch(`http://localhost:3000/user?page=${page}&take=${currentPage}&order=ASC`, {
+    fetch(`${VITE_API_URL}/user?page=${page}&take=${currentPage}&order=ASC`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -9,7 +9,7 @@ export function UploadsQueue() {
   const setServices = counterStore((state: any) => state.setServices);
 
   useEffect(() => {
-    const eventSource = new EventSource("http://localhost:3000/events/sse");
+    const eventSource = new EventSource(`${import.meta.env.VITE_API_URL}/events/sse`);
 
     eventSource.onmessage = ({ data }) => {
       if (data == false) {

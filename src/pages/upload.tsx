@@ -3,6 +3,7 @@ import { NoData } from "../components/noData";
 import AdminLayout from "../layout/admin";
 import Dropzone from "react-dropzone";
 import { counterStore } from "../stores/counterStore";
+import { VITE_API_URL } from "../config";
 
 interface EventSourceData {
   data: Array<any> | any;
@@ -22,7 +23,7 @@ export default function Upload() {
 
 
   function invokeSSEEventSource() {
-    eventSource = new EventSource("http://localhost:3000/events/sse");
+    eventSource = new EventSource(`${VITE_API_URL}/events/sse`);
 
     eventSource.onmessage = ({ data }: EventSourceData) => {
       const d = JSON.parse(data);
@@ -53,7 +54,7 @@ export default function Upload() {
     await files.forEach(async (file: any) => {
       let form = new FormData();
       form.append("file", file);
-      await fetch("http://localhost:3000/events/upload", {
+      await fetch(`${VITE_API_URL}/events/upload`, {
         method: "POST",
         body: form,
         credentials: "include",
@@ -108,7 +109,7 @@ export default function Upload() {
         onClick={async () => {
           let form = new FormData();
           form.append("file", file.current);
-          await fetch("http://localhost:3000/events/upload", {
+          await fetch(`${VITE_API_URL}/events/upload`, {
             method: "POST",
             body: form,
             credentials: "include",

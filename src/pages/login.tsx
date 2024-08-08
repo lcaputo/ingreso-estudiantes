@@ -24,8 +24,7 @@ export default function Login() {
       credentials: "include",
     });
     const data = await res.json();
-    console.log(data.access_token);
-    if (data) {
+    if (data.access_token) {
       toast.success("Login Success");
       setToken(data.access_token);
       navigate("/users");

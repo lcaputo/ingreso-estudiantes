@@ -5,10 +5,6 @@ import.meta.env;
 export const login = async (email: string, password: string) => {
   const response = await fetch(`${VITE_API_URL}/auth/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
     body: JSON.stringify({ email, password }),
     //save cookies
   });

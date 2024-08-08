@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../assets/css/entry.css";
 import { VITE_API_URL } from "../config";
 import toast from "react-hot-toast";
@@ -6,12 +6,61 @@ import { useNavigate } from "react-router-dom";
 import { usePerson } from "../hooks/usePerson";
 import { useEntry } from "../hooks/useEntry";
 import { IEntry } from "../interfaces/entry.interface";
+import useScanDetection from "../hooks/useScanDetection";
+import { on } from "events";
 
 export function Entry() {
   const [value, setValue] = useState("1001789241");
   const limit = 10;
   const { setPerson } = usePerson();
   const { entry, setEntry } = useEntry();
+  const specialKeyCodes = [
+    // General Special Keys
+    8, // Backspace
+    9, // Tab
+    19, // Pause/Break
+    20, // Caps Lock
+    27, // Escape
+    32, // Space
+    33, // Page Up
+    34, // Page Down
+    35, // End
+    37, // Left Arrow
+    38, // Up Arrow
+    39, // Right Arrow
+    40, // Down Arrow
+    45, // Insert
+    46, // Delete
+
+    // Number Keys (numpad)
+    // option
+    96, // Numpad 0
+    97, // Numpad 1
+    98, // Numpad 2
+    99, // Numpad 3
+    100, // Numpad 4
+    101, // Numpad 5
+    102, // Numpad 6
+    103, // Numpad 7
+    104, // Numpad 8
+    105, // Numpad 9
+    106, // Numpad *
+    107, // Numpad +
+    109, // Numpad -
+    110, // Numpad .
+    111, // Numpad /
+
+  ];
+  useScanDetection({
+    onComplete: (code) => {
+      console.log(code);
+      return;
+    },
+    stopPropagation: true,
+    preventDefault: true,
+    minLength: 1,
+    endCharacter: specialKeyCodes
+  });
 
   const navigate = useNavigate();
 
@@ -60,7 +109,10 @@ export function Entry() {
   return (
     <>
       <div className="fixed top-0 w-full">
-        <button className="flex items-center gap-2 me-10 bottom-0 my-8 float-right px-7 py-4 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full focus:outline-none" onClick={() => navigate("/guest")}>
+        <button
+          className="flex items-center gap-2 me-10 bottom-0 my-8 float-right px-7 py-4 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full focus:outline-none"
+          onClick={() => navigate("/guest")}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -68,9 +120,9 @@ export function Entry() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="icon icon-tabler icons-tabler-outline icon-tabler-user"
           >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />

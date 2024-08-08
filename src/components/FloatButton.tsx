@@ -1,6 +1,7 @@
 import { Card, Progress } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { counterStore } from "../stores/counterStore";
+import { VITE_API_URL } from "../config";
 
 interface EventSourceData {
   data: Array<any> | any;
@@ -16,7 +17,7 @@ export function FloatButton() {
   let eventSource: any;
 
   useEffect(() => {
-    eventSource = new EventSource("http://localhost:3000/events/sse");
+    eventSource = new EventSource(`${VITE_API_URL}/events/sse`);
     invokeSSEEventSource();
   }, []);
 
@@ -72,11 +73,11 @@ export function FloatButton() {
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
-                    stroke-width="2"
+                    strokeWidth="2"
                     stroke="currentColor"
                     fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M6 9v1a3 3 0 0 0 3 3h1"></path>

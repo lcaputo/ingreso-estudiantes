@@ -5,6 +5,7 @@ import { shallow } from "zustand/shallow";
 import { EntryViews } from "../enums/EntryViews";
 import { useEntry } from "../hooks/useEntry";
 import { IVehicle, VehicleType } from "../interfaces/vehicles.interface";
+import { VITE_API_URL } from "../config";
 
 interface Props {
   view: any;
@@ -21,7 +22,7 @@ const Vehicles = (props: Props) => {
   const { entry } = useEntry((state) => ({ entry: state.entry }), shallow);
 
   function getDevices() {
-    fetch("http://localhost:3000/vehicle", {
+    fetch(`${VITE_API_URL}/vehicle`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +57,7 @@ const Vehicles = (props: Props) => {
     data.forEach(function (value, key) {
       object[key] = value;
     });
-    fetch("http://localhost:3000/records/vehicle", {
+    fetch(`${VITE_API_URL}/records/vehicle`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +115,7 @@ const Vehicles = (props: Props) => {
 
                   }}
                 >
-                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-motorbike"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M19 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4" /><path d="M13 6h2l1.5 3l2 4" /></svg>
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-motorbike"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M19 16m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M7.5 14h5l4 -4h-10.5m1.5 4l4 -4" /><path d="M13 6h2l1.5 3l2 4" /></svg>
                   <div className="pl-3">
                     <p className="text-2xl font-medium text-gray-800 leading-none">
                       {vehicle.vehicleType.vendor || ""}

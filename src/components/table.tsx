@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import CustomModal from "./modal";
 import { Loader } from "./loader";
 import moment from "moment";
-import { Pagination } from 'flowbite-react';
-
+import { Pagination } from "flowbite-react";
 
 interface nameKey {
   label: string;
+  type?: string;
   key: string;
+  hide?: boolean;
 }
 
 interface Props {
@@ -30,7 +31,7 @@ export default function Table({
   const [openModal, setOpenModal] = useState<boolean | undefined>(false);
 
   const onPageChange = (page: number) => {
-    console.log('change page', page);
+    console.log("change page", page);
     fetchData(page);
   };
 
@@ -40,32 +41,38 @@ export default function Table({
   }
 
   function getRow(objeto: any, cadenaAcceso: any) {
-    const propiedades = cadenaAcceso.key.split("."); // Dividir la cadena de acceso en propiedades
-    let valor = objeto;
+    try {
 
-    for (const propiedad of propiedades) {
-      const matchArray = propiedad.match(/(.+)\[(\d+)\]/); // Buscar índices entre corchetes
-      if (matchArray) {
-        const propiedadObjeto = matchArray[1];
-        const indice = parseInt(matchArray[2]);
-        valor = valor[propiedadObjeto]; // Acceder a la propiedad del objeto
-        if (Array.isArray(valor)) {
-          valor = valor[indice]; // Acceder al elemento del arreglo
+      const propiedades = cadenaAcceso.key.split("."); // Dividir la cadena de acceso en propiedades
+      let valor = objeto;
+
+      for (const propiedad of propiedades) {
+        const matchArray = propiedad.match(/(.+)\[(\d+)\]/); // Buscar índices entre corchetes
+        if (matchArray) {
+          const propiedadObjeto = matchArray[1];
+          const indice = parseInt(matchArray[2]);
+          valor = valor[propiedadObjeto]; // Acceder a la propiedad del objeto
+          if (Array.isArray(valor)) {
+            valor = valor[indice]; // Acceder al elemento del arreglo
+          } else {
+            return ''; // Devolver undefined si la propiedad no es un arreglo
+          }
         } else {
-          return undefined; // Devolver undefined si la propiedad no es un arreglo
-        }
-      } else {
-        if (valor.hasOwnProperty(propiedad)) {
-          valor = valor[propiedad]; // Acceder a la propiedad actual
-        } else {
-          return undefined; // Devolver undefined si la propiedad no existe
+          if (valor.hasOwnProperty(propiedad)) {
+            valor = valor[propiedad]; // Acceder a la propiedad actual
+          } else {
+            return ''; // Devolver undefined si la propiedad no existe
+          }
         }
       }
+
+      return valor; // Devolver el valor final
+
+    } catch (error) {
+      console.log("Error en getRow", error);
+
     }
-
-    return valor; // Devolver el valor final
   }
-
   return (
     <>
       {isLoading === true ? (
@@ -252,14 +259,11 @@ export default function Table({
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               {/* Table header */}
               <tr>
-                {headers.map((header: any) => (
-                  <>
+                {headers.map((header) => (
+                  <Fragment key={header.key}>
                     {header.hide !== true && (
-                      <th
-                        key={header.key}
-                        className="font-semibold text-left p-4"
-                      >
-                        <div className="flex items-center">
+                      <th className="font-semibold text-left p-4">
+                        <span className="flex items-center">
                           {header.label}
                           <button data-dropdown-toggle="dropdownDefaultCheckbox">
                             {/* <svg
@@ -275,7 +279,7 @@ export default function Table({
 
                           <>
                             {/* Dropdown menu */}
-                            <div
+                            <span
                               id="dropdownDefaultCheckbox"
                               className="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
                             >
@@ -284,7 +288,7 @@ export default function Table({
                                 aria-labelledby="dropdownCheckboxButton"
                               >
                                 <li>
-                                  <div className="flex items-center">
+                                  <span className="flex items-center">
                                     <input
                                       id="checkbox-item-1"
                                       type="checkbox"
@@ -297,10 +301,10 @@ export default function Table({
                                     >
                                       CC
                                     </label>
-                                  </div>
+                                  </span>
                                 </li>
                                 <li>
-                                  <div className="flex items-center">
+                                  <span className="flex items-center">
                                     <input
                                       id="checkbox-item-3"
                                       type="checkbox"
@@ -313,15 +317,15 @@ export default function Table({
                                     >
                                       TI
                                     </label>
-                                  </div>
+                                  </span>
                                 </li>
                               </ul>
-                            </div>
+                            </span>
                           </>
-                        </div>
+                        </span>
                       </th>
                     )}
-                  </>
+                  </Fragment>
                 ))}
               </tr>
             </thead>
@@ -332,13 +336,10 @@ export default function Table({
                     className="bg-white border-b hover:bg-gray-50"
                     key={"row-" + index}
                   >
-                    {headers.map((header: any) => (
-                      <>
+                    {headers.map((header) => (
+                      <Fragment key={header.key}>
                         {header.type === "boolean" && (
-                          <td
-                            key={header.key}
-                            className="p-4 whitespace-nowrap"
-                          >
+                          <td className="p-4 whitespace-nowrap">
                             {getRow(data, header) ? "Si" : "No"}
                           </td>
                         )}
@@ -363,19 +364,19 @@ export default function Table({
                               {getRow(data, header)}
                             </td>
                           )}
-                      </>
+                      </Fragment>
                     ))}
                   </tr>
                 ))}
             </tbody>
-            <div className="flex overflow-x-auto sm:justify-center">
+            <span className="flex overflow-x-auto sm:justify-center">
               <Pagination
                 currentPage={meta.page}
                 totalPages={meta.pageCount}
                 onPageChange={onPageChange}
                 showIcons
               />
-            </div>
+            </span>
           </table>
         </div>
       )}

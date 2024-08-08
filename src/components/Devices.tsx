@@ -59,7 +59,7 @@ const Devices = (props: Props) => {
     data.forEach(function (value, key) {
       object[key] = value;
     });
-    fetch("http://localhost:3000/records/device", {
+    fetch(`${VITE_API_URL}/records/device`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
