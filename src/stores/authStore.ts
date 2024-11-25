@@ -7,6 +7,7 @@ export const useAuthStore = create((set, get: any) => ({
   setToken: (token: string) => () => {
     localStorage.setItem("access_token", token);
     set({ token });
+    return
   },
   logout: () => set({ token: '' }),
   isAuthenticated: () => {
