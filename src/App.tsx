@@ -26,9 +26,8 @@ function App() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        include: "credentials",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}` || "",
       },
-      credentials: "include",
     })
       .then((res) => {
         if (res.status === 401) {

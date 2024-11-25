@@ -3,6 +3,7 @@ import Table from "../components/table";
 import AdminLayout from "../layout/admin";
 import useFetch from "../hooks/useFetch";
 import { VITE_API_URL } from "../config";
+import { useAuthStore } from "../stores/authStore";
 
 interface dataSet {
   name: string;
@@ -14,6 +15,7 @@ interface dataSet {
 }
 
 export default function Users() {
+  const [token] = useAuthStore((state:any) => [state.token]);
   const [currentPage, setCurrentPage] = useState(10);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [users, setUsers] = useState<any>(null);
@@ -35,8 +37,8 @@ export default function Users() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
-      credentials: "include",
     })
       .then((res) => res.json())
       .then((data) => {

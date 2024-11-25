@@ -11,19 +11,16 @@ export default function Login() {
   async function handlerSubmit(event: any) {
     event.preventDefault();
     const { email, password } = event.target.elements;
-    // do login and save cookie access token
+
     const res = await fetch(VITE_API_URL + "/auth/login", {
       method: "POST",
-      mode: 'cors',
       headers: {
         "Content-Type": "application/json",
-	"Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify({
         email: email.value,
         password: password.value,
       }),
-      credentials: "include",
     });
     const data = await res.json();
     if (data.access_token) {

@@ -1,5 +1,6 @@
 import { useReducer, useEffect } from "react";
 import { VITE_API_URL } from "../config";
+import { useAuthStore } from "../stores/authStore";
 
 const ACTIONS = {
   API_REQUEST: "api-request",
@@ -29,12 +30,17 @@ function reducer(state: any, { type, payload }: any) {
 }
 
 function useFetch(url: string) {
+  const [token] = useAuthStore((state:any) => [state.token]);
+  console.log('token', token);
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     dispatch({ type: ACTIONS.API_REQUEST });
     fetch(`${VITE_API_URL}/${url}`, {
       method: "GET",
-      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
