@@ -16,10 +16,9 @@ export default function Login() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json",
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token, Authorization',
+        'Access-Control-Allow-Origin': 'https://pia.elprogramador.co',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
       body: JSON.stringify({
         email: email.value,

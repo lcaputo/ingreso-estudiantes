@@ -4,9 +4,9 @@ export const useAuthStore = create((set, get: any) => ({
 
   token: localStorage.getItem("access_token") || '',
 
-  setToken: (token: string) => () => {
-    localStorage.setItem("access_token", token);
-    set({ token });
+  setToken: (tkn: string) => () => {
+    localStorage.setItem("access_token", tkn);
+    set({ tkn });
     return
   },
   logout: () => set({ token: '' }),
