@@ -28,6 +28,7 @@ export default function Login() {
     const data = await res.json();
     if (data.access_token) {
       toast.success("Login Success");
+      localStorage.setItem("access_token", data.access_token);
       setToken(data.access_token);
       navigate("/users");
     } else {
