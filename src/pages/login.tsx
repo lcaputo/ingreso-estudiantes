@@ -19,7 +19,7 @@ export default function Login() {
         "Accept": "application/json",
         'Access-Control-Allow-Origin': 'https://pia.elprogramador.co',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Credentials, Accept',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept',
       },
       body: JSON.stringify({
         email: email.value,
