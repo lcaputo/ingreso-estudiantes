@@ -10,7 +10,13 @@ export function Entries() {
   const [isLoading, setIsLoading] = useState(true);
 
   function getEntries(page: number = 1) {
-    fetch(VITE_API_URL + `/records?page=${page}&take=10&order=ASC`).then((res) => {
+    fetch(VITE_API_URL + `/records?page=${page}&take=10&order=ASC`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    }).then((res) => {
       return res.json();
     }).then((data) => {
       setEntries(data);
