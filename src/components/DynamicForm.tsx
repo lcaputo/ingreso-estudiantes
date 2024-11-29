@@ -52,17 +52,17 @@ export function DynamicForm(props: Props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
       },
       body: JSON.stringify(getValues()),
-      credentials: "include",
     }).then((res) => {
       if (res.ok) {
         fetch(`${VITE_API_URL}/${props.enpoint!}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
           },
-          credentials: "include",
         }).then((res) => {
           if (res.ok) {
             props.fetchPetition();

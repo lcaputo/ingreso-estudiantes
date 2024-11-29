@@ -13,8 +13,8 @@ export const fetchStore = create((set) => ({
         method: method,
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
         },
-        credentials: "include",
         body: data ? JSON.stringify(data) : null,
       });
       if (request.status === 401) {

@@ -77,6 +77,7 @@ export function Entries() {
           headers={columns}
           meta={entries.meta}
           fetchData={getEntries}
+          isNew={false}
         />
         )}
       </AdminLayout>

@@ -29,8 +29,8 @@ function reducer(state: any, { type, payload }: any) {
   }
 }
 
-function useFetch(url: string) {
-  const [token] = useAuthStore((state:any) => [state.token]);
+function useFetch(url: string, data: any = {}) {
+  const token = localStorage.getItem("access_token");
   console.log('token', token);
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
@@ -41,6 +41,7 @@ function useFetch(url: string) {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
       },
+      body: data,
     })
       .then((res) => res.json())
       .then((data) => {

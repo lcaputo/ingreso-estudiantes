@@ -17,11 +17,11 @@ export default function AdminLayout({ children }: Props) {
           aria-label="Sidebar"
         >
           <div className="h-full px-3 pt-1 pb-4 overflow-y-auto bg-white">
-            <ul className="space-y-2 font-medium">
+            <ul className="space-y-2 font-medium gap-6">
               {/* Dashboard */}
               <li>
                 <Link
-                  to="/"
+                  to="/dashboard"
                   className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
                 >
                   <svg
@@ -124,8 +124,8 @@ export default function AdminLayout({ children }: Props) {
               </li>
               {/* Log Out */}
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/logout"
                   className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
                 >
                   <svg
@@ -145,7 +145,7 @@ export default function AdminLayout({ children }: Props) {
                   <span className="flex-1 ml-3 whitespace-nowrap font-bold text-secondary">
                     Log Out
                   </span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

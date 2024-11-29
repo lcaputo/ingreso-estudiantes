@@ -10,6 +10,46 @@ import useScanDetection from "../hooks/useScanDetection";
 import { on } from "events";
 
 export function Entry() {
+  const [receivedData, setReceivedData] = useState("");
+
+  useEffect(() => {
+    const example = async () => {
+      // click button to request a serial port
+      const button = document.getElementById("serialPortBtn");
+      button?.click();
+    }
+    example();
+  }, []);
+
+  const readSerialPort = async () => {
+    if ("serial" in navigator) {
+      try {
+        const port = await (navigator as any).serial.requestPort();
+        await port.open({ baudRate: 9600 }); // Adjust baud rate as needed
+
+        const reader = port.readable.getReader();
+
+        while (true) {
+          console.log("Reading...");
+
+          const { value, done } = await reader.read();
+          console.log('value', value);
+          console.log('done', done);
+
+          if (done) {
+            break;
+          }
+
+          const decoder = new TextDecoder();
+          const text = decoder.decode(value);
+          setReceivedData((prevData) => prevData + text);
+        }
+      } catch (error) {
+        console.error("Error reading serial port:", error);
+      }
+    }
+  };
+
   const [value, setValue] = useState("1001789241");
   const limit = 10;
   const { setPerson } = usePerson();
@@ -49,7 +89,6 @@ export function Entry() {
     109, // Numpad -
     110, // Numpad .
     111, // Numpad /
-
   ];
   useScanDetection({
     onComplete: (code) => {
@@ -59,7 +98,7 @@ export function Entry() {
     stopPropagation: true,
     preventDefault: true,
     minLength: 1,
-    endCharacter: specialKeyCodes
+    endCharacter: specialKeyCodes,
   });
 
   const navigate = useNavigate();
@@ -69,13 +108,13 @@ export function Entry() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
       body: JSON.stringify({
         person: {
           document: parseInt(value),
         },
       }),
-      credentials: "include",
     })
       .then((res) => {
         if (res.ok) {
@@ -109,6 +148,7 @@ export function Entry() {
   return (
     <>
       <div className="fixed top-0 w-full">
+        <button id="serialPortBtn" onClick={readSerialPort}>Read Serial Port</button>
         <button
           className="flex items-center gap-2 me-10 bottom-0 my-8 float-right px-7 py-4 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full focus:outline-none"
           onClick={() => navigate("/guest")}

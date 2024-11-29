@@ -18,6 +18,7 @@ interface Props {
   isLoading?: boolean;
   enpoint?: string;
   meta?: any;
+  isNew?: boolean;
 }
 
 export default function Table({
@@ -27,6 +28,7 @@ export default function Table({
   isLoading,
   enpoint,
   meta,
+  isNew = true,
 }: Props) {
   const [openModal, setOpenModal] = useState<boolean | undefined>(false);
 
@@ -209,8 +211,8 @@ export default function Table({
                   </div>
                 </div>
               </div> */}
-              {/* New */}
-              <div>
+              {isNew && (
+                <div>
                 <button
                   onClick={toggleModal}
                   className="inline-flex items-center font-medium rounded-lg text-sm px-3 py-1.5
@@ -219,6 +221,7 @@ export default function Table({
                   Nuevo
                 </button>
               </div>
+              )}
             </section>
 
             {/* Search */}
@@ -369,12 +372,14 @@ export default function Table({
                   </tr>
                 ))}
             </tbody>
-            <span className="flex overflow-x-auto sm:justify-center">
+            <span className="flex overflow-x-auto">
               <Pagination
                 currentPage={meta.page}
                 totalPages={meta.pageCount}
                 onPageChange={onPageChange}
                 showIcons
+                nextLabel="Siguiente"
+                previousLabel="Anterior"
               />
             </span>
           </table>

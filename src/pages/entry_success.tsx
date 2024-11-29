@@ -30,8 +30,8 @@ export function EntrySuccess() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
       },
-      credentials: "include",
     })
       .then((res) => {
         if (res.ok) {
@@ -52,8 +52,8 @@ export function EntrySuccess() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
       },
-      credentials: "include",
     })
       .then((res) => {
         if (res.ok) {
@@ -75,8 +75,8 @@ export function EntrySuccess() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
         },
-        credentials: "include",
         body: JSON.stringify({
           idRecord: entry.id,
           idDevice: deviceID,
@@ -102,8 +102,8 @@ export function EntrySuccess() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
         },
-        credentials: "include",
         body: JSON.stringify({
           idRecord: entry.id,
           idVehicle: vehicleID,

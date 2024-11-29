@@ -16,36 +16,45 @@ import Guest from "./pages/guest";
 import { useSymbologyScanner } from "@use-symbology-scanner/react";
 import { Scanner } from "./pages/scanner";
 import Exit from "./pages/exit";
+import useFetch from "./hooks/useFetch";
+import Logout from "./pages/logout";
 
 function App() {
   const isAuthenticated = useAuthStore((state: any) => state.isAuthenticated());
   const setToken = useAuthStore((state: any) => state.setToken);
 
-  useEffect(() => {
-    fetch(VITE_API_URL + "/auth/validate", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("access_token")}` || "",
-      },
-    })
-      .then((res) => {
-        if (res.status === 401) {
-          console.log("Unauthorized");
-          setToken("");
-        }
-        if (res.status === 200) {
-          console.log("Authorized");
-          return res.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
+  const {
+    data: valid,
+    loading: loadingRoles,
+    error: errorRoles,
+  } = useFetch('auth/validate');
 
-        if (data) {
-          setToken(data.token);
-        }
-      });
+  useEffect(() => {
+
+    // fetch(VITE_API_URL + "/auth/validate", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Authorization": `Bearer ${localStorage.getItem("access_token")}` || "",
+    //   },
+    // })
+    //   .then((res) => {
+    //     if (res.status === 401) {
+    //       console.log("Unauthorized");
+    //       setToken("");
+    //     }
+    //     if (res.status === 200) {
+    //       console.log("Authorized");
+    //       return res.json();
+    //     }
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+
+    //     if (data) {
+    //       setToken(data.token);
+    //     }
+    //   });
   }, []);
 
 
@@ -53,7 +62,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
+            path="/dashboard"
             element={isAuthenticated ? <Dashboard /> : <Login />}
           />
           <Route path="/login" element={<Login />} />
@@ -68,6 +77,7 @@ function App() {
           <Route path="/guest" element={<Guest />} />
           <Route path="/scanner" element={<Scanner />} />
           <Route path="/exit" element={<Exit />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>
   );

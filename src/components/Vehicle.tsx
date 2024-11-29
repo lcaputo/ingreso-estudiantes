@@ -26,8 +26,8 @@ const Vehicles = (props: Props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
       },
-      credentials: "include",
     })
       .then((res) => {
         if (res.ok) {
@@ -61,8 +61,8 @@ const Vehicles = (props: Props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
       },
-      credentials: "include",
       body: JSON.stringify({
         idVehicleType: parseInt(object.idVehicleType),
         badge: object.badge,

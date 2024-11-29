@@ -22,6 +22,7 @@ export default function () {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
       },
       body: JSON.stringify({
         firstName: values.firstName,
@@ -30,7 +31,6 @@ export default function () {
         document: parseInt(values.document),
         personTypes: 5,
       }),
-      credentials: "include",
     })
       .then((res) => {
         if (res.ok) {
@@ -56,8 +56,8 @@ export default function () {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
       },
-      credentials: "include",
     })
       .then((res) => {
         if (res.ok) {
@@ -145,7 +145,7 @@ export default function () {
           )}
           <br />
           <button type="submit" className="bg-primary py-4 text-white">
-            Submit
+            Entrar
           </button>
         </form>
       </div>
