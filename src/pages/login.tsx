@@ -40,8 +40,8 @@ export default function Login() {
   return (
     <section id="login" className="bg-gray-50">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 h-screen">
-        <span className="flex gap-2 mb-5">
-          <svg
+        <span className="flex flex-col gap-2 mb-5">
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             className="icon icon-tabler icon-tabler-fingerprint text-primary"
             width="64"
@@ -58,11 +58,16 @@ export default function Login() {
             <path d="M12 11v2a14 14 0 0 0 2.5 8" />
             <path d="M8 15a18 18 0 0 0 1.8 6" />
             <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" />
-          </svg>
+          </svg> */}
+          <div className="flex items-center justify-center">
+            <img src="/src/assets/logoSena.png" alt="logo" width="128px" />
+          </div>
 
-          <h1 className=" tracking-widest font-bold self-center text-4xl whitespace-nowrap text-secondary">
+          <h1 className="block text-2xl bolder">Centro Colombo alemán sede TIC</h1>
+
+          {/* <h1 className=" tracking-widest font-bold self-center text-4xl whitespace-nowrap text-secondary">
             PIA
-          </h1>
+          </h1> */}
         </span>
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -104,7 +109,7 @@ export default function Login() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                className="w-full text-white bg-tertiary  focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm p-4 border rounded-md text-center"
               >
                 Entrar
               </button>

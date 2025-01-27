@@ -5,6 +5,7 @@ import { VITE_API_URL } from "../config";
 
 export default function () {
   const [docTypes, setDocTypes] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -15,9 +16,11 @@ export default function () {
   } = useForm();
 
   const submit = () => {
+    if(loading) return;
     const values = getValues();
     if (values.docType === "") return;
     console.log(values);
+    setLoading(true);
     fetch(`${VITE_API_URL}/person`, {
       method: "POST",
       headers: {
@@ -35,9 +38,7 @@ export default function () {
       .then((res) => {
         if (res.ok) {
           toast.success("Usuario Registrado");
-          setTimeout(() => {
-            window.location.href = "/entry";
-          }, 2000);
+          window.location.href = "/entry";
           return res.json();
         } else {
           toast.error("Error");
@@ -48,6 +49,9 @@ export default function () {
       })
       .catch(() => {
         toast.error("Error");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -78,7 +82,11 @@ export default function () {
 
   return (
     <>
-      <div className="screen">
+    {/* back button */}
+    <div className="bg-gray-500 p-2 px-4 border rounded-md absolute top-0 left-0 m-4">
+      <a href="/entry" className="text-white">Volver</a>
+    </div>
+      <div className="w-96 mx-auto mt-20">
         <form className="flex flex-col mx-auto" onSubmit={handleSubmit(submit)}>
           <label>Nombres</label>
           <input
@@ -90,7 +98,7 @@ export default function () {
           />
           {errors["firstName"] && (
             <small className="text-warning font-semibold">
-              This field is required
+              Campo requerido
             </small>
           )}
           <br />
@@ -104,7 +112,7 @@ export default function () {
           />
           {errors["lastName"] && (
             <small className="text-warning font-semibold">
-              This field is required
+              Campo requerido
             </small>
           )}
           <br />
@@ -126,7 +134,7 @@ export default function () {
           </select>
           {errors["docType"] && (
             <small className="text-warning font-semibold">
-              This field is required
+              Campo requerido
             </small>
           )}
           <br />
@@ -140,11 +148,12 @@ export default function () {
           />
           {errors["document"] && (
             <small className="text-warning font-semibold">
-              This field is required
+              Campo requerido
             </small>
           )}
           <br />
-          <button type="submit" className="bg-primary py-4 text-white">
+          <button type="submit" disabled={loading}
+          className="bg-[#01AE00] p-4 border rounded-md text-white">
             Entrar
           </button>
         </form>

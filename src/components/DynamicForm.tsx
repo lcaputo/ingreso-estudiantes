@@ -165,7 +165,7 @@ export function DynamicForm(props: Props) {
                 />
                 {errors[header.key] && (
                   <small className="text-warning font-semibold">
-                    This field is required
+                    Campo requerido
                   </small>
                 )}
               </>
@@ -189,7 +189,7 @@ export function DynamicForm(props: Props) {
                   />
                   {errors[header.key] && (
                     <small className="text-warning font-semibold">
-                      This field is required
+                      Campo requerido
                     </small>
                   )}
                 </div>

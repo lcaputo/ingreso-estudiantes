@@ -215,7 +215,7 @@ const Devices = (props: Props) => {
           : "Nuevo dispositivo"}
       </button>
       <button
-        className="mt-4 py-5 bg-primary text-white w-full rounded-md"
+        className="mt-4 py-5 bg-tertiary text-white w-full rounded-md"
         onClick={() => {
           if (props.view === EntryViews.device_create) {
             props.setView(EntryViews.device_list);

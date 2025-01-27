@@ -18,7 +18,7 @@ export function EntrySuccess() {
   const [selectedDevicesID, setSelectedDevicesID] = useState<number[]>([]);
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
   const [selectedVehiclesID, setSelectedVehiclesID] = useState<number[]>([]);
-
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { entry } = useEntry(
     (state) => ({ entry: state.entry }),
@@ -127,8 +127,7 @@ export function EntrySuccess() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('===>',entry);
-
+    setLoading(true);
     if (entry && entry.id === 0) {
       return
     } else {
@@ -139,13 +138,16 @@ export function EntrySuccess() {
         toast.success("Entrada exitosa!");
         getDevices();
         getVehicles();
+        setLoading(false);
       }
     }
   }, [entry]);
 
   return (
     <>
-      {entry.out === false ? (
+      {loading ? '' :(
+        <>
+        {entry.out === false ? (
         <>
           <div className="w-100 text-center mt-8 flex flex-col items-center">
             {/* <h1 className="text-4xl font-bold text-black mb-8 w-96 text-left border-b two-lines-text-elipsis">
@@ -188,7 +190,7 @@ export function EntrySuccess() {
                         ></path>
                       </svg>
                       <p className="pt-2 text-3xl font-semibold text-gray-50">
-                        {entry.person.firtsName} <br /> {entry.person.lastName}
+                        {entry.person.firstName} <br /> {entry.person.lastName}
                       </p>
                       <p className="text-xl text-gray-100 mt-1">
                         {entry.entryType.type}
@@ -354,7 +356,7 @@ export function EntrySuccess() {
                       </section>
                     </div>
                     <button
-                      className="mt-14 mb-6 py-5  bg-primary text-white w-full rounded-md"
+                      className="mt-14 mb-6 py-5  bg-tertiary text-white w-full rounded-md"
                       onClick={() => {
                         associateDevices2Entry();
                         associateVehicles2Entry();
@@ -420,6 +422,8 @@ export function EntrySuccess() {
             </h3>
           </div>
         </>
+      )}
+      </>
       )}
     </>
   );

@@ -50,7 +50,7 @@ export function Entry() {
     }
   };
 
-  const [value, setValue] = useState("1001789241");
+  const [value, setValue] = useState("");
   const limit = 10;
   const { setPerson } = usePerson();
   const { entry, setEntry } = useEntry();
@@ -148,9 +148,9 @@ export function Entry() {
   return (
     <>
       <div className="fixed top-0 w-full">
-        <button id="serialPortBtn" onClick={readSerialPort}>Read Serial Port</button>
+        {/* <button id="serialPortBtn" onClick={readSerialPort}>Read Serial Port</button> */}
         <button
-          className="flex items-center gap-2 me-10 bottom-0 my-8 float-right px-7 py-4 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full focus:outline-none"
+          className="flex items-center gap-2 me-10 bottom-0 my-8 float-right p-2 px-4 border rounded-md bg-[#01AE00] text-white text-sm font-bold tracking-wide rounded-full focus:outline-none"
           onClick={() => navigate("/guest")}
         >
           <svg

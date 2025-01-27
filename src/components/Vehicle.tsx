@@ -245,7 +245,7 @@ const Vehicles = (props: Props) => {
               : "Nuevo vehiculo"}
           </button>
           <button
-            className="mt-4 py-5 bg-primary text-white w-full rounded-md"
+            className="mt-4 py-5 bg-tertiary text-white w-full rounded-md"
             onClick={() => {
               if (props.view === EntryViews.vehicle_create) {
                 props.setView(EntryViews.vehicle_list);

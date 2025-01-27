@@ -17,7 +17,7 @@ grid grid-cols-9 gap-1 place-content-center;
 .keyboard button {
   @apply relative flex items-center justify-center text-3xl
 transition-all duration-500 rounded-xl bg-white shadow-md text-gray-600
-active:scale-95 active:duration-[0s] active:bg-primary active:text-white;
+active:scale-95 active:duration-[0s] active:bg-tertiary active:text-white;
 }
 
 .keyboard button svg {

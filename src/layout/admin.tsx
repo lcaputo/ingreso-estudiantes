@@ -109,7 +109,7 @@ export default function AdminLayout({ children }: Props) {
                   </span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/history"
                   className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
@@ -121,7 +121,7 @@ export default function AdminLayout({ children }: Props) {
                     History
                   </span>
                 </Link>
-              </li>
+              </li> */}
               {/* Log Out */}
               <li>
                 <Link

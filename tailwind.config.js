@@ -8,13 +8,16 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#06b6d4",
+          DEFAULT: "#077B78",
         },
         secondary: {
           DEFAULT: "#706F6F",
         },
+        tertiary: {
+          DEFAULT: "#73B02C",
+        },
         warning: {
-          DEFAULT: "#DB3A34",
+          DEFAULT: "#EE6E0C",
         },
         dark: {
           DEFAULT: "#00171F",

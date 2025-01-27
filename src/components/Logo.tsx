@@ -1,7 +1,7 @@
 export function Logo() {
   return (
     <>
-      <svg
+      {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         className="icon icon-tabler icon-tabler-fingerprint text-primary"
         width="32"
@@ -18,11 +18,17 @@ export function Logo() {
         <path d="M12 11v2a14 14 0 0 0 2.5 8" />
         <path d="M8 15a18 18 0 0 0 1.8 6" />
         <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" />
-      </svg>
+      </svg> */}
 
-      <h1 className=" tracking-widest font-bold self-center text-xl sm:text-2xl whitespace-nowrap text-secondary">
+          <div className="flex items-center justify-center">
+            <img src="/src/assets/logoSena.png" alt="logo" width="36px" />
+          </div>
+
+          <h1 className="block text-2xl bolder">Centro Colombo alemán sede TIC</h1>
+
+      {/* <h1 className=" tracking-widest font-bold self-center text-xl sm:text-2xl whitespace-nowrap text-secondary">
         PIA
-      </h1>
+      </h1> */}
     </>
   );
 }
