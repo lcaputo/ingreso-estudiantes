@@ -4,7 +4,7 @@ export default function Exit() {
     useEffect(() => {
         setTimeout(() => {
             window.location.href = "/entry";
-        }, 1000)
+        }, 500)
     }, [])
     return(
         <>
