@@ -3,10 +3,28 @@ import toast from "react-hot-toast";
 import { Logo } from "../components/Logo";
 import { useAuthStore } from "../stores/authStore";
 import { VITE_API_URL } from "../config";
+import { jwtDecode } from 'jwt-decode'
+import { useEffect } from "react";
 
 export default function Login() {
   const setToken = useAuthStore((state: any) => state.setToken);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const access_token = localStorage.getItem("access_token");
+    if (access_token) {
+      setToken(access_token);
+      const token: any = jwtDecode(access_token);
+      const roles = token.user.role;
+      if (roles) {
+        if (roles.find((role: any) => role.tipo === "Puesto de servicio")) {
+          navigate("/entry");
+        } else {
+          navigate("/dashboard");
+        }
+      }
+    }
+  }, []);
 
   async function handlerSubmit(event: any) {
     event.preventDefault();
@@ -29,9 +47,17 @@ export default function Login() {
     const data = await res.json();
     if (data.access_token) {
       toast.success("Login Success");
+      const token: any = await jwtDecode(data.access_token)
+      const roles: any[] = token.user.role;
       localStorage.setItem("access_token", data.access_token);
       setToken(data.access_token);
-      navigate("/dashboard");
+      console.log(roles);
+
+      if(roles.find((role: any) => role.tipo === 'Administrador')){
+        navigate("/dashboard");
+      } else if(roles.find((role: any) => role.tipo === 'Puesto de servicio')){
+        navigate("/entry");
+      }
     } else {
       toast.error("Login Failed");
     }
