@@ -1,8 +1,8 @@
 export interface Person {
     createdAt:   Date;
     id:          number;
-    firtsName:   string;
-    firstName:   string;
+    firtsName?:   string;
+    firstName?:   string;
     lastName:    string;
     document:    number;
     state:       boolean;
