@@ -16,8 +16,10 @@ export default function Login() {
       method: "POST",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json",
+       "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH",
+        "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
       },
       body: JSON.stringify({
         email: email.value,
