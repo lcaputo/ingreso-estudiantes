@@ -21,7 +21,7 @@ export function Logo() {
       </svg> */}
 
           <div className="flex items-center justify-center">
-            <img src="/src/assets/logoSena.png" alt="logo" width="36px" />
+            <img src="/assets/logoSena.png" alt="logo" width="36px" />
           </div>
 
           <h1 className="block text-2xl bolder">Centro Colombo alemán sede TIC</h1>

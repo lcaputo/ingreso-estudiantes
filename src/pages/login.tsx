@@ -60,7 +60,7 @@ export default function Login() {
             <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" />
           </svg> */}
           <div className="flex items-center justify-center">
-            <img src="/src/assets/logoSena.png" alt="logo" width="128px" />
+            <img src="/assets/logoSena.png" alt="logo" width="128px" />
           </div>
 
           <h1 className="block text-2xl bolder">Centro Colombo alemán sede TIC</h1>
