@@ -6,7 +6,7 @@ export function Success() {
     useEffect(() => {
         setTimeout(() => {
             window.location.href = "/entry";
-        }, 2000)
+        }, 1500)
     }, [])
     return (
         <div className="content">

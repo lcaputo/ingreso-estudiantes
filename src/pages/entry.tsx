@@ -121,9 +121,11 @@ export function Entry() {
           setValue("");
           navigate("/entry_success");
           return res.json();
+        } else if(res.status === 401){
+          toast.error("Un administrador debe inciar sesión");
         } else {
-          toast.error("Error");
           setValue("");
+          toast.error("Error");
         }
       })
       .then((res) => {
@@ -131,9 +133,6 @@ export function Entry() {
         setEntry(res.data as IEntry);
         setPerson(res.data.person);
       })
-      .catch(() => {
-        toast.error("Error");
-      });
     return;
   }
 

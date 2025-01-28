@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import EyeIconLarge from "../assets/icons/IconEye2";
 import EyeIconComplex from "../assets/icons/IconEye";
 import MailIcon from "../assets/icons/IconMail";
+import { RoleEnumByType } from "../enums/eUserRole";
 
 export default function Login() {
   const [viewPassword, setViewPassword] = useState(false);
@@ -35,7 +36,13 @@ export default function Login() {
     if (data.access_token) {
       toast.success("Login Success");
       setToken(data.access_token);
-      navigate("/dashboard");
+      console.log({data});
+      
+      if (data.rol.tipo === RoleEnumByType.PUESTO_DE_SERVICIO) {
+        navigate("/entry");
+      } else {
+        navigate("/dashboard");
+      }
     } else {
       toast.error("Login Failed");
     }
@@ -64,7 +71,7 @@ export default function Login() {
             <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" />
           </svg> */}
           <div className="flex items-center justify-center">
-            <img src="/src/assets/logoSena.png" alt="logo" width="128px" />
+            <img src="/assets/logoSena.png" alt="logo" width="128px" />
           </div>
 
           <h1 className="block text-2xl bolder">
