@@ -13,6 +13,7 @@ export default function Login() {
   const setToken = useAuthStore((state: any) => state.setToken);
   const navigate = useNavigate();
   const inputRefPassword = useRef<HTMLInputElement>(null);
+
   async function handlerSubmit(event: any) {
     event.preventDefault();
     const { email, password } = event.target.elements;
@@ -35,14 +36,14 @@ export default function Login() {
     const data = await res.json();
     if (data.access_token) {
       toast.success("Login Success");
-      setToken(data.access_token);
-      console.log({data});
-      
-      if (data.rol.tipo === RoleEnumByType.PUESTO_DE_SERVICIO) {
-        navigate("/entry");
-      } else {
-        navigate("/dashboard");
-      }
+      setToken(data.access_token,data.rol.tipo);
+      // if (data.rol.tipo === RoleEnumByType.PUESTO_DE_SERVICIO) {
+      //   console.log("navigate to entry");
+        
+      //   navigate("/entry");
+      // } else {
+      //   navigate("/dashboard");
+      // }
     } else {
       toast.error("Login Failed");
     }

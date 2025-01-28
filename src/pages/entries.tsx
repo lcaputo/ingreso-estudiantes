@@ -40,7 +40,7 @@ export function Entries() {
       label: "Número documento",
     },
     {
-      key: "person.firtsName",
+      key: "person.firstName",
       label: "Nombres",
     },
     {
@@ -54,24 +54,27 @@ export function Entries() {
     {
       key: "person.groups[0].code",
       label: "Ficha",
+      labelWithoutData: "Sin ficha",
     },
     {
       key: "person.haveDevices",
       label: "dispositivos",
+      labelWithoutData: "Sin dispositivos",
       type: "boolean",
     },
     {
       key: "person.haveVehicles",
       label: "vehiculos",
+      labelWithoutData: "Sin vehiculos",
       type: "boolean",
     },
     {
-      key: "person.recorEntry[0].checkIn",
+      key: "checkIn",
       label: "Ingreso",
+      labelWithoutData: "Sin ingreso",
       type: "date",
     },
   ];
-
   return (
     <>
       <AdminLayout>

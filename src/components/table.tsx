@@ -9,6 +9,7 @@ interface nameKey {
   type?: string;
   key: string;
   hide?: boolean;
+  labelWithoutData?: string;
 }
 
 interface Props {
@@ -44,7 +45,6 @@ export default function Table({
 
   function getRow(objeto: any, cadenaAcceso: any) {
     try {
-
       const propiedades = cadenaAcceso.key.split("."); // Dividir la cadena de acceso en propiedades
       let valor = objeto;
 
@@ -57,22 +57,22 @@ export default function Table({
           if (Array.isArray(valor)) {
             valor = valor[indice]; // Acceder al elemento del arreglo
           } else {
-            return ''; // Devolver undefined si la propiedad no es un arreglo
+            return ""; // Devolver undefined si la propiedad no es un arreglo
           }
         } else {
           if (valor.hasOwnProperty(propiedad)) {
             valor = valor[propiedad]; // Acceder a la propiedad actual
           } else {
-            return ''; // Devolver undefined si la propiedad no existe
+            return ""; // Devolver undefined si la propiedad no existe
           }
         }
       }
-
+      
+      
       return valor; // Devolver el valor final
-
     } catch (error) {
-      console.log("Error en getRow", error);
-
+      // console.log("Error en getRow", error);
+      return ""
     }
   }
   return (
@@ -213,14 +213,14 @@ export default function Table({
               </div> */}
               {isNew && (
                 <div>
-                <button
-                  onClick={toggleModal}
-                  className="inline-flex items-center font-medium rounded-lg text-sm px-3 py-1.5
+                  <button
+                    onClick={toggleModal}
+                    className="inline-flex items-center font-medium rounded-lg text-sm px-3 py-1.5
                       text-white bg-primary shadow-sm shadow-gray-300"
-                >
-                  Nuevo
-                </button>
-              </div>
+                  >
+                    Nuevo
+                  </button>
+                </div>
               )}
             </section>
 
@@ -334,43 +334,47 @@ export default function Table({
             </thead>
             <tbody className="relative">
               {dataSet &&
-                dataSet.map((data, index) => (
-                  <tr
-                    className="bg-white border-b hover:bg-gray-50"
-                    key={"row-" + index}
-                  >
-                    {headers.map((header) => (
-                      <Fragment key={header.key}>
-                        {header.type === "boolean" && (
-                          <td className="p-4 whitespace-nowrap">
-                            {getRow(data, header) ? "Si" : "No"}
-                          </td>
-                        )}
-
-                        {header.type && header.type === "date" && (
-                          <td
-                            key={header.key}
-                            className="p-4 whitespace-nowrap"
-                          >
-                            {moment(getRow(data, header)).format(
-                              "DD/MM/YYYY HH:mm A"
+                dataSet.map((data, index) => {
+                  return (
+                    <tr
+                      className="bg-white border-b hover:bg-gray-50"
+                      key={"row-" + index}
+                    >
+                      {headers.map((header) => {
+                        return (
+                          <Fragment key={header.key}>
+                            {header.type === "boolean" && (
+                              <td className="p-4 whitespace-nowrap">
+                                {getRow(data, header) ? "Si" : "No"}
+                              </td>
                             )}
-                          </td>
-                        )}
 
-                        {header.type !== "date" &&
-                          header.type !== "boolean" && (
-                            <td
-                              key={header.key}
-                              className="p-4 whitespace-nowrap"
-                            >
-                              {getRow(data, header)}
-                            </td>
-                          )}
-                      </Fragment>
-                    ))}
-                  </tr>
-                ))}
+                            {header.type && header.type === "date" && (
+                              <td
+                                key={header.key}
+                                className="p-4 whitespace-nowrap"
+                              >
+                                {moment(getRow(data, header)).format(
+                                  "DD/MM/YYYY HH:mm A"
+                                ) || header.labelWithoutData}  
+                              </td>
+                            )}
+
+                            {header.type !== "date" &&
+                              header.type !== "boolean" && (
+                                <td
+                                  key={header.key}
+                                  className="p-4 whitespace-nowrap"
+                                >
+                                  {getRow(data, header)}
+                                </td>
+                              )}
+                          </Fragment>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
             </tbody>
             <span className="flex overflow-x-auto">
               <Pagination

@@ -11,7 +11,9 @@ export default function Statistics() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`${VITE_API_URL}/dashboard/statitics`);
+        const response = await fetch(
+          `${VITE_API_URL}/dashboard/statitics?fromMonth=1`
+        );
         console.log(response);
         if (response.status === 200) {
           const res: IFetchData<IData> = await response.json();
