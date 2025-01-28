@@ -13,6 +13,7 @@ export default function Login() {
   const setToken = useAuthStore((state: any) => state.setToken);
   const navigate = useNavigate();
   const inputRefPassword = useRef<HTMLInputElement>(null);
+  const inputRefEmail = useRef<HTMLInputElement>(null);
 
   async function handlerSubmit(event: any) {
     event.preventDefault();
@@ -36,10 +37,10 @@ export default function Login() {
     const data = await res.json();
     if (data.access_token) {
       toast.success("Login Success");
-      setToken(data.access_token,data.rol.tipo);
+      setToken(data.access_token, data.rol.tipo);
       // if (data.rol.tipo === RoleEnumByType.PUESTO_DE_SERVICIO) {
       //   console.log("navigate to entry");
-        
+
       //   navigate("/entry");
       // } else {
       //   navigate("/dashboard");
@@ -104,8 +105,26 @@ export default function Login() {
                     placeholder="usuario@empresa.com"
                     required
                     className="border-none w-full focus:ring-0"
+                    ref={inputRefEmail}
                   />
-                  <button>
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (inputRefEmail.current) {
+                        const cursorPosition =
+                          inputRefEmail.current.selectionStart;
+                        setTimeout(() => {
+                          inputRefEmail.current?.focus();
+                          inputRefEmail.current?.setSelectionRange(
+                            cursorPosition,
+                            cursorPosition
+                          );
+                        }, 0);
+                      }
+                    }}
+                  >
                     <MailIcon width="24" height="24" />
                   </button>
                 </div>
@@ -129,6 +148,7 @@ export default function Login() {
                   />
                   <button
                     type="button"
+                    tabIndex={-1}
                     onClick={(e) => {
                       e.preventDefault();
                       if (inputRefPassword.current) {
