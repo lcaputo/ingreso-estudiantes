@@ -1,6 +1,12 @@
 import { create } from "zustand";
-
-export const useAuthStore = create((set, get: any) => ({
+interface IAuthStore {
+  token: string;
+  rol: string;
+  setToken: (token: string, rol: string) => void;
+  logout: () => void;
+  isAuthenticated: () => boolean;
+}
+export const useAuthStore = create<IAuthStore>((set, get) => ({
   token: localStorage.getItem("access_token") || "",
   rol: localStorage.getItem("rol") || "",
 

@@ -1,4 +1,4 @@
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../stores/authStore";
 import { RoleEnumByType } from "../enums/eUserRole";
 import { useEffect, useState } from "react";
@@ -10,12 +10,12 @@ const roleRoutes: { [key in RoleEnumByType]: string[] } = {
   [RoleEnumByType.SUPER_USER]: ["/dashboard", "/users", "/records", "/history", "/upload"],
   [RoleEnumByType.ADMINISTRADOR]: ["/dashboard", "/users", "/records", "/history", "/upload"],
   [RoleEnumByType.AUDITOR]: ["/dashboard", "/records", "/history"],
-  [RoleEnumByType.PUESTO_DE_SERVICIO]: ["/entry", "/guest"],
+  [RoleEnumByType.PUESTO_DE_SERVICIO]: ["/entry", "/guest","/entry_success", "/success"],
 };
 
 const ValidateRoutePrivate = ({ children }: IValidRoutePrivate) => {
-  const isAuthenticated = useAuthStore((state: any) => state.isAuthenticated());
-  const rol = useAuthStore((state: any) => state.rol as keyof typeof roleRoutes);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
+  const rol = useAuthStore((state) => state.rol as keyof typeof roleRoutes);
   const [redirectPath, setRedirectPath] = useState<string | null>(null);
   const location = useLocation();
 
