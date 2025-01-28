@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { Logo } from "../components/Logo";
 import { useAuthStore } from "../stores/authStore";
 import { VITE_API_URL } from "../config";
+import { useRef, useState } from "react";
+import EyeIconLarge from "../assets/icons/IconEye2";
+import EyeIconComplex from "../assets/icons/IconEye";
+import MailIcon from "../assets/icons/IconMail";
 
 export default function Login() {
+  const [viewPassword, setViewPassword] = useState(false);
   const setToken = useAuthStore((state: any) => state.setToken);
   const navigate = useNavigate();
-
+  const inputRefPassword = useRef<HTMLInputElement>(null);
   async function handlerSubmit(event: any) {
     event.preventDefault();
     const { email, password } = event.target.elements;
@@ -16,10 +20,11 @@ export default function Login() {
       method: "POST",
       mode: "cors",
       headers: {
-       "Content-Type": "application/json",
+        "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH",
-        "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+        "Access-Control-Allow-Headers":
+          "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
       },
       body: JSON.stringify({
         email: email.value,
@@ -29,7 +34,6 @@ export default function Login() {
     const data = await res.json();
     if (data.access_token) {
       toast.success("Login Success");
-      localStorage.setItem("access_token", data.access_token);
       setToken(data.access_token);
       navigate("/dashboard");
     } else {
@@ -63,7 +67,9 @@ export default function Login() {
             <img src="/src/assets/logoSena.png" alt="logo" width="128px" />
           </div>
 
-          <h1 className="block text-2xl bolder">Centro Colombo alemán sede TIC</h1>
+          <h1 className="block text-2xl bolder">
+            Centro Colombo alemán sede TIC
+          </h1>
 
           {/* <h1 className=" tracking-widest font-bold self-center text-4xl whitespace-nowrap text-secondary">
             PIA
@@ -82,14 +88,19 @@ export default function Login() {
                 >
                   Email
                 </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="usuario@empresa.com"
-                  required
-                />
+                <div className=" flex bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="usuario@empresa.com"
+                    required
+                    className="border-none w-full focus:ring-0"
+                  />
+                  <button>
+                    <MailIcon width="24" height="24" />
+                  </button>
+                </div>
               </div>
               <div>
                 <label
@@ -98,14 +109,42 @@ export default function Login() {
                 >
                   Contraseña
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required
-                />
+                <div className="flex bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2">
+                  <input
+                    type={viewPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    className="border-none w-full focus:ring-0"
+                    required
+                    ref={inputRefPassword}
+                  />
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (inputRefPassword.current) {
+                        const cursorPosition =
+                          inputRefPassword.current.selectionStart;
+                        setViewPassword(!viewPassword);
+                        setTimeout(() => {
+                          inputRefPassword.current?.focus();
+                          inputRefPassword.current?.setSelectionRange(
+                            cursorPosition,
+                            cursorPosition
+                          );
+                        }, 0);
+                      }
+                      setViewPassword(!viewPassword);
+                    }}
+                  >
+                    {viewPassword ? (
+                      <EyeIconLarge color="#ffff" />
+                    ) : (
+                      <EyeIconComplex color="#73B02C" />
+                    )}
+                  </button>
+                </div>
               </div>
               <button
                 type="submit"
