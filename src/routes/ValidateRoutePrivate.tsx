@@ -6,11 +6,39 @@ interface IValidRoutePrivate {
   children: JSX.Element;
 }
 
-const roleRoutes: { [key in RoleEnumByType]: string[] } = {
-  [RoleEnumByType.SUPER_USER]: ["/dashboard", "/users", "/records", "/history", "/upload"],
-  [RoleEnumByType.ADMINISTRADOR]: ["/dashboard", "/users", "/records", "/history", "/upload"],
+export const roleRoutes: { [key in RoleEnumByType]: string[] } = {
+  [RoleEnumByType.SUPER_USER]: [
+    "/dashboard",
+    "/users",
+    "/records",
+    "/history",
+    "/upload",
+    "/entry",
+    "/guest",
+    "/entry_success",
+    "/success",
+    "/exit",
+  ],
+  [RoleEnumByType.ADMINISTRADOR]: [
+    "/dashboard",
+    "/users",
+    "/records",
+    "/history",
+    "/upload",
+    "/entry",
+    "/guest",
+    "/entry_success",
+    "/success",
+    "/exit",
+  ],
   [RoleEnumByType.AUDITOR]: ["/dashboard", "/records", "/history"],
-  [RoleEnumByType.PUESTO_DE_SERVICIO]: ["/entry", "/guest","/entry_success", "/success"],
+  [RoleEnumByType.PUESTO_DE_SERVICIO]: [
+    "/entry",
+    "/guest",
+    "/entry_success",
+    "/success",
+    "/exit",
+  ],
 };
 
 const ValidateRoutePrivate = ({ children }: IValidRoutePrivate) => {
@@ -22,13 +50,15 @@ const ValidateRoutePrivate = ({ children }: IValidRoutePrivate) => {
   useEffect(() => {
     if (!isAuthenticated) {
       setRedirectPath("/login");
-    } else if (roleRoutes[rol] && !roleRoutes[rol].includes(location.pathname)) {
+    } else if (
+      roleRoutes[rol] &&
+      !roleRoutes[rol].includes(location.pathname)
+    ) {
       setRedirectPath(roleRoutes[rol][0]);
     } else {
       setRedirectPath(null);
     }
   }, [isAuthenticated, rol, location.pathname]);
-
   if (redirectPath) {
     return <Navigate to={redirectPath} />;
   }
