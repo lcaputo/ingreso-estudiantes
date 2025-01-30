@@ -12,7 +12,7 @@ export default function Statistics() {
     const getData = async () => {
       try {
         const response = await fetch(
-          `${VITE_API_URL}/dashboard/statitics?fromMonth=1`
+          `${VITE_API_URL}/dashboard/statitics`
         );
         console.log(response);
         if (response.status === 200) {
